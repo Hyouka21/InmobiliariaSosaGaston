@@ -18,6 +18,7 @@ namespace InmobiliariaSosa.Controllers
         }
         public ActionResult Index()
         {
+            ViewBag.error = TempData["error"];
             var lista = idata.obtenerTodo();
             return View(lista);
         }
@@ -41,9 +42,10 @@ namespace InmobiliariaSosa.Controllers
                 idata.alta(i);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                TempData["error"] = ex.Message;
+                return RedirectToAction(nameof(Index));
             }
         }
 
@@ -64,9 +66,10 @@ namespace InmobiliariaSosa.Controllers
                 idata.Modificacion(inq);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                TempData["error"] = ex.Message;
+                return RedirectToAction(nameof(Index));
             }
         }
 

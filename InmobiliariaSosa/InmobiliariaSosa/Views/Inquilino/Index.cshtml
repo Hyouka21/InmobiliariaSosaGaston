@@ -3,7 +3,25 @@
 @{
     ViewData["Title"] = "Inquilino";
 }
+<script type="text/javascript" onl >
+    function editar(x){
+        
+        $("#editarModal").modal("show");
+        
+        var nombre = $('#' + x + '-nombre')[0].innerText;
+        var apellido = $('#' + x + '-apellido')[0].innerText;
+        var dni = $('#' + x + '-dni')[0].innerText;
+        var email = $('#' + x + '-mail')[0].innerText;
+        var telefono = $('#' + x + '-tel')[0].innerText;
+        $("#idInquilino")[0].value = x;
+        $("#nombre")[0].value = nombre;
+        $("#apellido")[0].value = apellido;
+        $("#dni")[0].value = dni;
+        $("#telefono")[0].value = telefono;
+        $("#email")[0].value = email;       
 
+    }
+</script>
 <h1>Inquilino</h1>
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearModal">
     Crear Inquilino
@@ -80,77 +98,80 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>
+                <td id="@item.idInquilino-id">
                     @Html.DisplayFor(modelItem => item.idInquilino)
                 </td>
-                <td>
+                <td id="@item.idInquilino-nombre">
                     @Html.DisplayFor(modelItem => item.nombre)
                 </td>
-                <td>
+                <td id="@item.idInquilino-apellido">
                     @Html.DisplayFor(modelItem => item.apellido)
                 </td>
-                <td>
+                <td id="@item.idInquilino-dni">
                     @Html.DisplayFor(modelItem => item.dni)
                 </td>
-                <td>
+                <td id="@item.idInquilino-tel">
                     @Html.DisplayFor(modelItem => item.telefono)
                 </td>
-                <td>
+                <td id="@item.idInquilino-mail">
                     @Html.DisplayFor(modelItem => item.email)
                 </td>
                 <td>
-                    <a href="#" data-toggle="modal" data-target="#editarModal-@item.idInquilino">
+                    <a href="javascript:editar(@item.idInquilino)">
                         Editar
                     </a> |
                     @Html.ActionLink("Detalles", "Details", new { id = item.idInquilino }) |
                     @Html.ActionLink("Borrar", "Delete", new { id = item.idInquilino })
 
-                    <div class="modal fade" id="editarModal-@item.idInquilino" tabindex="-1" aria-labelledby="editarModalLabel.@item.idInquilino" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="editarModalLabel.@item.idInquilino">Crear Inquilino</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    <form asp-action="Edit">
-                                        <input type="hidden" name="idInquilino" value="@item.idInquilino" />
-                                        <div class="text-danger"></div>
-                                        <div class="form-group">
-                                            <label for="nombre" class="control-label">Nombre</label>
-                                            <input type="text" name="nombre" class="form-control" value="@item.nombre" />
 
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="apellido" class="control-label">apellido</label>
-                                            <input type="text" name="apellido" class="form-control" value="@item.apellido" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="dni" class="control-label">dni</label>
-                                            <input type="text" name="dni" class="form-control" value="@item.dni" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="telefono" class="control-label">telefono</label>
-                                            <input type="tel" name="telefono" class="form-control" value="@item.telefono" />
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email" class="control-label">email</label>
-                                            <input type="email" name="email" class="form-control" value="@item.email" />
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="submit" value="Crear" class="btn btn-primary" />
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </td>
             </tr>
-            
+
 
         }
+    
     </tbody>
 </table>
+<div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editarModalLabel">Editar Inquilino</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Edit">
+                    <input type="hidden"  id="idInquilino" name="idInquilino" value="" />
+                    <div class="text-danger"></div>
+                    <div class="form-group">
+                        <label for="nombre" class="control-label">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" class="form-control" value="" />
+
+                    </div>
+                    <div class="form-group">
+                        <label for="apellido" class="control-label">Apellido</label>
+                        <input type="text" id="apellido" name="apellido" class="form-control" value="" />
+                    </div>
+                    <div class="form-group">
+                        <label for="dni" class="control-label">Dni</label>
+                        <input type="text" id="dni"  name="dni" class="form-control" value="" />
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono" class="control-label">Telefono</label>
+                        <input type="tel" id="telefono" name="telefono" class="form-control" value="" />
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="control-label">Email</label>
+                        <input type="email" id="email" name="email" class="form-control" value="" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Editar" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

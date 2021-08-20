@@ -36,6 +36,10 @@
         </nav>
     </header>
     <div class="container">
+        @if (ViewBag.error != null)
+        {
+            <p>@ViewBag.error</p>
+        }
         <main role="main" class="pb-3">
             @RenderBody()
         </main>

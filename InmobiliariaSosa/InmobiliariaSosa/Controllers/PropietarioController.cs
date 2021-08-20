@@ -19,7 +19,8 @@ namespace InmobiliariaSosa.Controllers
         // GET: PropietarioController
         public ActionResult Index()
         {
-             var list =pd.obtenerTodo();
+            ViewBag.error = TempData["error"];
+            var list =pd.obtenerTodo();
             return View(list);
         }
 
@@ -41,9 +42,10 @@ namespace InmobiliariaSosa.Controllers
                 pd.alta(p);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                TempData["error"] = ex.Message;
+                return RedirectToAction(nameof(Index));
             }
         }
 
@@ -69,9 +71,10 @@ namespace InmobiliariaSosa.Controllers
                 pd.Modificacion(mod);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                TempData["error"] = ex.Message;
+                return RedirectToAction(nameof(Index));
             }
         }
 

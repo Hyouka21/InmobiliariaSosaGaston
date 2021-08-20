@@ -25,14 +25,11 @@ namespace InmobiliariaSosa.Controllers
         // GET: InquilinoController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var mod = idata.ObtenerPorId(id);
+            return View(mod);
         }
 
-        // GET: InquilinoController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+
 
         // POST: InquilinoController/Create
         [HttpPost]
@@ -50,26 +47,20 @@ namespace InmobiliariaSosa.Controllers
             }
         }
 
-        // GET: InquilinoController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            var inq = idata.ObtenerPorId(id);
-            return View(inq);
-        }
 
         // POST: InquilinoController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Inquilino i)
         {
             try
             {
-                var inq =idata.ObtenerPorId(id);
-                inq.nombre = collection["nombre"];
-                inq.apellido = collection["apellido"];
-                inq.dni = collection["dni"];
-                inq.email = collection["email"];
-                inq.telefono = collection["telefono"];
+                var inq =idata.ObtenerPorId(i.idInquilino);
+                inq.nombre = i.nombre;
+                inq.apellido = i.apellido;
+                inq.dni = i.dni;
+                inq.email = i.email;
+                inq.telefono = i.telefono;
                 idata.Modificacion(inq);
                 return RedirectToAction(nameof(Index));
             }

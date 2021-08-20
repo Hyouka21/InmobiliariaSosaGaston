@@ -19,7 +19,7 @@ namespace InmobiliariaSosa.Models
             int res = -1;
             using (SqlConnection con = new SqlConnection(conectionString))
             {
-                string sql = @"INSERT INTO Propietario (nombre,apellido,dni,telefono,mail,clave) VALUES(@nombre,@apellido,@dni,@telefono,@mail,@clave);SELECT SCOPE_IDENTITY();";
+                string sql = @"INSERT INTO Propietario (nombre,apellido,dni,telefono,email,clave) VALUES(@nombre,@apellido,@dni,@telefono,@mail,@clave);SELECT SCOPE_IDENTITY();";
                 using (SqlCommand com = new SqlCommand(sql, con))
                 {
                     com.Parameters.AddWithValue("@mail", p.email);
@@ -40,7 +40,7 @@ namespace InmobiliariaSosa.Models
             IList<Propietario> lista = new List<Propietario>();
             using (SqlConnection con = new SqlConnection(conectionString))
             {
-                string sql = @"SELECT idInquilino,nombre,apellido,dni,telefono,email,clave FROM Inquilino;";
+                string sql = @"SELECT idPropietario,nombre,apellido,dni,telefono,email,clave FROM Propietario;";
                 using (SqlCommand com = new SqlCommand(sql, con))
                 {
                     com.CommandType = CommandType.Text;
@@ -105,6 +105,38 @@ namespace InmobiliariaSosa.Models
                 }
             }
             return res;
+        }
+        public Propietario ObtenerPorId(int id)
+        {
+            Propietario p = null;
+            using (SqlConnection connection = new SqlConnection(conectionString))
+            {
+                string sql = $"SELECT idPropietario, nombre, apellido, dni, telefono, email, clave FROM Propietario" +
+                    $" WHERE idPropietario=@id";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.CommandType = CommandType.Text;
+                    command.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                    connection.Open();
+                    var reader = command.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        p = new Propietario
+                        {
+                            idPropietario = reader.GetInt32(0),
+                            nombre = reader.GetString(1),
+                            apellido = reader.GetString(2),
+                            dni = reader.GetString(3),
+                            telefono = reader.GetString(4),
+                            email = reader.GetString(5),
+                            clave = reader.GetString(6)
+                        };
+                        return p;
+                    }
+                    connection.Close();
+                }
+            }
+            return p;
         }
     }
 }

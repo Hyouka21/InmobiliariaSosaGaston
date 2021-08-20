@@ -1,0 +1,167 @@
+﻿@model IEnumerable<InmobiliariaSosa.Models.Propietario>
+
+@{
+    ViewData["Title"] = "Propietario";
+}
+
+<h1>Index</h1>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearModal">
+    Crear Propietario
+</button>
+
+<div class="modal fade" id="crearModal" tabindex="-1" aria-labelledby="crearModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="crearModalLabel">Crear Propietario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Create">
+                    <div class="text-danger"></div>
+                    <div class="form-group">
+                        <label for="nombre" class="control-label">Nombre</label>
+                        <input type="text" name="nombre" class="form-control" />
+
+                    </div>
+                    <div class="form-group">
+                        <label for="apellido" class="control-label">apellido</label>
+                        <input type="text" name="apellido" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="dni" class="control-label">dni</label>
+                        <input type="text" name="dni" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono" class="control-label">telefono</label>
+                        <input type="tel" name="telefono" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="control-label">email</label>
+                        <input type="email" name="email" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="clave" class="control-label">clave</label>
+                        <input type="password" name="clave" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Crear" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.idPropietario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.apellido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.dni)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.telefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.clave)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.idPropietario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.apellido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dni)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.telefono)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.clave)
+                </td>
+                <td>
+                    <a href="#" data-toggle="modal" data-target="#editarModal-@item.idPropietario">
+                        Editar
+                    </a> |
+                    @Html.ActionLink("Detalles", "Details", new { id = item.idPropietario }) |
+                    @Html.ActionLink("Borrar", "Delete", new { id = item.idPropietario })
+                    <div class="modal fade" id="editarModal-@item.idPropietario" tabindex="-1" aria-labelledby="editarModalLabel.@item.idPropietario" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editarModalLabel.@item.idPropietario">Crear Propietario</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form asp-action="Edit">
+                                        <input type="hidden" name="idPropietario" value="@item.idPropietario" />
+                                        <div class="text-danger"></div>
+                                        <div class="form-group">
+                                            <label for="nombre" class="control-label">Nombre</label>
+                                            <input type="text" name="nombre" class="form-control" value="@item.nombre" />
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="apellido" class="control-label">apellido</label>
+                                            <input type="text" name="apellido" class="form-control" value="@item.apellido" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="dni" class="control-label">dni</label>
+                                            <input type="text" name="dni" class="form-control" value="@item.dni" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="telefono" class="control-label">telefono</label>
+                                            <input type="tel" name="telefono" class="form-control" value="@item.telefono" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email" class="control-label">email</label>
+                                            <input type="email" name="email" class="form-control" value="@item.email" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="clave" class="control-label">clave</label>
+                                            <input type="text" name="clave" class="form-control" value="@item.clave" />
+
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Crear" class="btn btn-primary" />
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

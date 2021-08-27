@@ -1,6 +1,7 @@
 ﻿using InmobiliariaSosa.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,9 @@ namespace InmobiliariaSosa.Controllers
     public class PropietarioController : Controller
     {
         private PropietarioData pd;
-        public PropietarioController()
+        public PropietarioController(IConfiguration configuration)
         {
-            pd = new PropietarioData();
+            pd = new PropietarioData(configuration);
         }
         // GET: PropietarioController
         public ActionResult Index()

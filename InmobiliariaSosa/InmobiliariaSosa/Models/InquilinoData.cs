@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -7,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace InmobiliariaSosa.Models
 {
-    public class InquilinoData
+    public class InquilinoData : Data
     {
-        private string conectionString = "Server=(localdb)\\MSSQLLocalDB;Database=InmobiliariaSosa;Trusted_Connection=True;MultipleActiveResultSets=true";
-        public InquilinoData()
+        
+        public InquilinoData(IConfiguration configuration):base(configuration)
         {
 
         }

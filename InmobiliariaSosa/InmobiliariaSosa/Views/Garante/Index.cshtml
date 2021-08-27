@@ -1,0 +1,172 @@
+﻿@model IEnumerable<InmobiliariaSosa.Models.Garante>
+
+@{
+    ViewData["Title"] = "Garante";
+}
+<script type="text/javascript" onl>
+    function editar(x){
+
+        $("#editarModal").modal("show");
+
+        var nombre = $('#' + x + '-nombre')[0].innerText;
+        var apellido = $('#' + x + '-apellido')[0].innerText;
+        var dni = $('#' + x + '-dni')[0].innerText;
+        var email = $('#' + x + '-mail')[0].innerText;
+        var telefono = $('#' + x + '-tel')[0].innerText;
+        $("#idGarante")[0].value = x;
+        $("#nombre")[0].value = nombre;
+        $("#apellido")[0].value = apellido;
+        $("#dni")[0].value = dni;
+        $("#telefono")[0].value = telefono;
+        $("#email")[0].value = email;
+
+    }
+</script>
+
+<h1>Garante</h1>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearModal">
+    Crear Garante
+</button>
+
+<div class="modal fade" id="crearModal" tabindex="-1" aria-labelledby="crearModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="crearModalLabel">Crear Garante</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Create">
+                    <div class="text-danger"></div>
+                    <div class="form-group">
+                        <label for="nombre" class="control-label">Nombre</label>
+                        <input type="text" name="Nombre" class="form-control" />
+
+                    </div>
+                    <div class="form-group">
+                        <label for="apellido" class="control-label">apellido</label>
+                        <input type="text" name="Apellido" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="dni" class="control-label">dni</label>
+                        <input type="text" name="Dni" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono" class="control-label">telefono</label>
+                        <input type="tel" name="Telefono" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="control-label">email</label>
+                        <input type="email" name="Email" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Crear" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apellido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dni)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td id="@item.Id-id">
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td id="@item.Id-nombre">
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td id="@item.Id-apellido">
+                    @Html.DisplayFor(modelItem => item.Apellido)
+                </td>
+                <td id="@item.Id-dni">
+                    @Html.DisplayFor(modelItem => item.Dni)
+                </td>
+                <td id="@item.Id-tel">
+                    @Html.DisplayFor(modelItem => item.Telefono)
+                </td>
+                <td id="@item.Id-mail">
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    <a href="javascript:editar(@item.Id)">
+                        Editar
+                    </a> |
+                    @Html.ActionLink("Detalles", "Details", new {  id=item.Id }) |
+                    @Html.ActionLink("Borrar", "Delete", new {  id=item.Id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editarModalLabel">Editar Garante</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Edit">
+                    <input type="hidden" id="idGarante" name="Id" value="" />
+                    <div class="text-danger"></div>
+                    <div class="form-group">
+                        <label for="nombre" class="control-label">Nombre</label>
+                        <input type="text" id="nombre" name="Nombre" class="form-control" value="" />
+
+                    </div>
+                    <div class="form-group">
+                        <label for="apellido" class="control-label">Apellido</label>
+                        <input type="text" id="apellido" name="Apellido" class="form-control" value="" />
+                    </div>
+                    <div class="form-group">
+                        <label for="dni" class="control-label">Dni</label>
+                        <input type="text" id="dni" name="Dni" class="form-control" value="" />
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono" class="control-label">Telefono</label>
+                        <input type="tel" id="telefono" name="Telefono" class="form-control" value="" />
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="control-label">Email</label>
+                        <input type="email" id="email" name="Email" class="form-control" value="" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Editar" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

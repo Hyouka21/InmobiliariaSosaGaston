@@ -1,0 +1,208 @@
+﻿@model IEnumerable<InmobiliariaSosa.Models.Inmueble>
+
+@{
+    ViewData["Title"] = "Inicio";
+}
+<script type="text/javascript" onl>
+    function editar(x){
+
+        $("#editarModal").modal("show");
+        
+        var direccion = $('#' + x + '-Direccion')[0].innerText;
+        var ambiente = $('#' + x + '-Ambiente')[0].innerText;
+        var  superficie= $('#' + x + '-Superficie')[0].innerText;
+        var latitud = $('#' + x + '-Latitud')[0].innerText;
+        var longitud = $('#' + x + '-Longitud')[0].innerText;
+        var propietario = $('#' + x + '-IdPropietario')[0].value;
+        console.log(propietario);
+        $("#Id")[0].value = x;
+        $("#Direccion")[0].value = direccion;
+        $("#Ambiente")[0].value = ambiente;
+        $("#Superficie")[0].value = superficie;
+        $("#Latitud")[0].value = latitud;
+        $("#Longitud")[0].value = longitud;
+        $("#IdPropietario option:selected").removeAttr("selected");
+        $("#IdPropietario option[value=" + propietario + "]").attr("selected", true);
+
+    }
+</script>
+<h1>Inmueble</h1>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearModal">
+    Crear Inmueble
+</button>
+
+<div class="modal fade" id="crearModal" tabindex="-1" aria-labelledby="crearModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="crearModalLabel">Crear Inmueble</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label for="Direccion" class="control-label">Direccion</label>
+                        <input type="text" name="Direccion" class="form-control" />
+                        <span for="Direccion" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Ambiente" class="control-label">Ambiente</label>
+                        <input type="number" name="Ambiente" class="form-control" />
+                        <span for="Ambiente" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Superficie" class="control-label">Superficie</label>
+                        <input type="number" name="Superficie" class="form-control" />
+                        <span for="Superficie" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Latitud" class="control-label">Latitud</label>
+                        <input type="text"name="Latitud" class="form-control" />
+                        <span for="Latitud" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Longitud" class="control-label">Longitud</label>
+                        <input name="Longitud" class="form-control" />
+                        <span for="Longitud" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Propietario</label>
+                        <select class="form-control" name="IdPropietario">
+                            @foreach (var item in (IList<Propietario>)ViewBag.Propietarios)
+                            {
+                                <option value="@item.idPropietario">@(item.nombre + " " + item.apellido)</option>
+}
+                        </select>
+                        <span for="IdPropietario" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Crear" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Direccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Ambiente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Superficie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Latitud)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Longitud)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdPropietario)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td id="@item.Id-Id">
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td id="@item.Id-Direccion">
+                    @Html.DisplayFor(modelItem => item.Direccion)
+                </td>
+                <td id="@item.Id-Ambiente">
+                    @Html.DisplayFor(modelItem => item.Ambiente)
+                </td>
+                <td id="@item.Id-Superficie">
+                    @Html.DisplayFor(modelItem => item.Superficie)
+                </td>
+                <td id="@item.Id-Latitud">
+                    @Html.DisplayFor(modelItem => item.Latitud)
+                </td>
+                <td id="@item.Id-Longitud">
+                    @Html.DisplayFor(modelItem => item.Longitud)
+                </td>
+                <td >
+                    @item.Duenio.nombre @item.Duenio.apellido
+                    <input type="hidden" value="@item.IdPropietario" id="@item.Id-IdPropietario" />
+                </td>
+                <td>
+                    <a href="javascript:editar(@item.Id)">
+                        Editar
+                    </a> |
+                    @Html.ActionLink("Detalles", "Details", new {  id=item.Id  }) |
+                    @Html.ActionLink("Borrar", "Delete", new {  id=item.Id  })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editarModalLabel">Editar Inmueble</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Edit">
+                    <input type="hidden" id="Id" name="Id" value="" />
+                    <div class="form-group">
+                        <label for="Direccion" class="control-label">Direccion</label>
+                        <input type="text" id="Direccion" name="Direccion" class="form-control" />
+                        <span for="Direccion" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Ambiente" class="control-label">Ambiente</label>
+                        <input type="number" id="Ambiente" name="Ambiente" class="form-control" />
+                        <span for="Ambiente" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Superficie" class="control-label">Superficie</label>
+                        <input type="number" id="Superficie" name="Superficie" class="form-control" />
+                        <span for="Superficie" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Latitud" class="control-label">Latitud</label>
+                        <input type="text"  id="Latitud"name="Latitud" class="form-control" />
+                        <span for="Latitud" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Longitud" class="control-label">Longitud</label>
+                        <input name="Longitud"  id="Longitud" class="form-control" />
+                        <span for="Longitud" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Propietario</label>
+                        <select class="form-control" name="IdPropietario" id="IdPropietario">
+                            @foreach (var item in (IList<Propietario>)ViewBag.Propietarios)
+                            {
+                                <option value="@item.idPropietario">@(item.nombre + " " + item.apellido)</option>
+                            }
+                        </select>
+                        <span for="IdPropietario" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Editar" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

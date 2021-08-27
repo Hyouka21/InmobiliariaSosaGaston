@@ -126,3 +126,13 @@ C:\Users\Gonza\Desktop\.NET\Inmobiliaria\InmobiliariaSosaGaston\InmobiliariaSosa
 C:\Users\Gonza\Desktop\.NET\Inmobiliaria\InmobiliariaSosaGaston\InmobiliariaSosa\InmobiliariaSosa\obj\Debug\net5.0\Razor\Views\Propietario\Index.cshtml.g.cs
 C:\Users\Gonza\Desktop\.NET\Inmobiliaria\InmobiliariaSosaGaston\InmobiliariaSosa\InmobiliariaSosa\obj\Debug\net5.0\Razor\Views\Propietario\Delete.cshtml.g.cs
 C:\Users\Gonza\Desktop\.NET\Inmobiliaria\InmobiliariaSosaGaston\InmobiliariaSosa\InmobiliariaSosa\obj\Debug\net5.0\Razor\Views\Propietario\Details.cshtml.g.cs
+C:\Users\Gonza\Desktop\.NET\Inmobiliaria\InmobiliariaSosaGaston\InmobiliariaSosa\InmobiliariaSosa\obj\Debug\net5.0\Razor\Views\Inmueble\Index.cshtml.g.cs
+C:\Users\Gonza\Desktop\.NET\Inmobiliaria\InmobiliariaSosaGaston\InmobiliariaSosa\InmobiliariaSosa\obj\Debug\net5.0\Razor\Views\Inmueble\Create.cshtml.g.cs
+C:\Users\Gonza\Desktop\.NET\Inmobiliaria\InmobiliariaSosaGaston\InmobiliariaSosa\InmobiliariaSosa\obj\Debug\net5.0\Razor\Views\Inmueble\Details.cshtml.g.cs
+C:\Users\Gonza\Desktop\.NET\Inmobiliaria\InmobiliariaSosaGaston\InmobiliariaSosa\InmobiliariaSosa\obj\Debug\net5.0\Razor\Views\Inmueble\Delete.cshtml.g.cs
+C:\Users\Gonza\Desktop\.NET\Inmobiliaria\InmobiliariaSosaGaston\InmobiliariaSosa\InmobiliariaSosa\obj\Debug\net5.0\Razor\Views\Garante\Index.cshtml.g.cs
+C:\Users\Gonza\Desktop\.NET\Inmobiliaria\InmobiliariaSosaGaston\InmobiliariaSosa\InmobiliariaSosa\obj\Debug\net5.0\Razor\Views\Garante\Details.cshtml.g.cs
+C:\Users\Gonza\Desktop\.NET\Inmobiliaria\InmobiliariaSosaGaston\InmobiliariaSosa\InmobiliariaSosa\obj\Debug\net5.0\Razor\Views\Garante\Delete.cshtml.g.cs
+C:\Users\Gonza\Desktop\.NET\Inmobiliaria\InmobiliariaSosaGaston\InmobiliariaSosa\InmobiliariaSosa\obj\Debug\net5.0\Razor\Views\Contrato\Index.cshtml.g.cs
+C:\Users\Gonza\Desktop\.NET\Inmobiliaria\InmobiliariaSosaGaston\InmobiliariaSosa\InmobiliariaSosa\obj\Debug\net5.0\Razor\Views\Contrato\Delete.cshtml.g.cs
+C:\Users\Gonza\Desktop\.NET\Inmobiliaria\InmobiliariaSosaGaston\InmobiliariaSosa\InmobiliariaSosa\obj\Debug\net5.0\Razor\Views\Contrato\Details.cshtml.g.cs

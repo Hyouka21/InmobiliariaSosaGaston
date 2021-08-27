@@ -1,6 +1,7 @@
 ﻿using InmobiliariaSosa.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,9 @@ namespace InmobiliariaSosa.Controllers
     {
         // GET: InquilinoController
         private InquilinoData idata;
-        public InquilinoController()
+        public InquilinoController(IConfiguration configuration)
         {
-            idata = new InquilinoData();
+            idata = new InquilinoData(configuration);
         }
         public ActionResult Index()
         {

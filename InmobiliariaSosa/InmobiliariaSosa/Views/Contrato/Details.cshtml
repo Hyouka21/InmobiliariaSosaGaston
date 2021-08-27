@@ -1,0 +1,56 @@
+﻿@model InmobiliariaSosa.Models.Contrato
+
+@{
+    ViewData["Title"] = "Detalle";
+}
+
+<h1>Detalle</h1>
+
+<div>
+    <h4>Contrato</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdInquilino)
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Inquilino.nombre @Model.Inquilino.apellido
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IdInmueble)
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.Inmueble.Direccion
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaDesde)
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.FechaDesde.Date.ToString("yyyy-MM-dd")
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaHasta)
+        </dt>
+        <dd class = "col-sm-10">
+            @Model.FechaHasta.Date.ToString("yyyy-MM-dd")
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IdGarante)
+            
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Garante.Nombre
+            @Model.Garante.Apellido
+        </dd>
+    </dl>
+</div>
+<div>
+   
+    <a asp-action="Index">Volver a contratos</a>
+</div>

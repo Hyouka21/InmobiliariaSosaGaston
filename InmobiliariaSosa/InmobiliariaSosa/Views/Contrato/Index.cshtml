@@ -1,0 +1,216 @@
+﻿@model IEnumerable<InmobiliariaSosa.Models.Contrato>
+
+@{
+    ViewData["Title"] = "Contrato";
+}
+<script type="text/javascript" onl>
+    function editar(x){
+
+        $("#editarModal").modal("show");
+
+        var inquilino = $('#' + x + '-IdInquilino')[0].value;
+        var inmueble = $('#' + x + '-IdInmueble')[0].value;
+        var fechadesde = $('#' + x + '-FechaDesde')[0].innerText;
+        var fechahasta = $('#' + x + '-FechaHasta')[0].innerText;
+        var garante = $('#' + x + '-IdGarante')[0].value;
+        $("#Id")[0].value = x;
+        $("#FechaDesde")[0].value = fechadesde;
+        $("#FechaHasta")[0].value = fechahasta;
+        $("#IdInquilino option:selected").removeAttr("selected");
+        $("#IdInquilino option[value=" + inquilino + "]").attr("selected", true);
+        $("#IdInmueble option:selected").removeAttr("selected");
+        $("#IdInmueble option[value=" + inmueble + "]").attr("selected", true);
+        $("#IdGarante option:selected").removeAttr("selected");
+        $("#IdGarante option[value=" + garante + "]").attr("selected", true);
+
+    }
+</script>
+<h1>Contrato</h1>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearModal">
+    Crear Contrato
+</button>
+
+<div class="modal fade" id="crearModal" tabindex="-1" aria-labelledby="crearModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="crearModalLabel">Crear Contrato</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label class="control-label">Inquilino</label>
+                        <select class="form-control" name="IdInquilino">
+                            @foreach (var item in (IList<Inquilino>)ViewBag.Inquilinos)
+                            {
+                                <option value="@item.idInquilino">@(item.nombre + " " + item.apellido)</option>
+                            }
+                        </select>
+                        <span for="IdInquilino" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Inmueble</label>
+                        <select class="form-control" name="IdInmueble">
+                            @foreach (var item in (IList<Inmueble>)ViewBag.Inmuebles)
+                            {
+                                <option value="@item.Id">@(item.Direccion)</option>
+                            }
+                        </select>
+                        <span for="IdInmueble" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="FechaDesde" class="control-label">Fecha Ingreso</label>
+                        <input type="date" name="FechaDesde" class="form-control" />
+                        <span for="FechaDesde" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="FechaHasta" class="control-label">Fecha Salida</label>
+                        <input type="date" name="FechaHasta" class="form-control" />
+                        <span for="FechaHasta" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Garante</label>
+                        <select class="form-control" name="IdGarante">
+                            @foreach (var item in (IList<Garante>)ViewBag.Garantes)
+                            {
+                                <option value="@item.Id">@(item.Nombre + " " + item.Apellido)</option>
+                            }
+                        </select>
+                        <span for="IdGarante" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Crear" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdInquilino)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdInmueble)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaDesde)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaHasta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdGarante)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td id="@item.Id-Id">
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td >
+                    <input type="hidden" value="@item.IdInquilino" id="@item.Id-IdInquilino" />
+                    @item.Inquilino.nombre @item.Inquilino.apellido
+                </td>
+                <td>
+                    <input type="hidden" value="@item.IdInmueble" id="@item.Id-IdInmueble" />
+                    @item.Inmueble.Direccion
+                </td>
+                <td id="@item.Id-FechaDesde">
+                    @item.FechaDesde.Date.ToString("yyyy-MM-dd")
+                </td>
+                <td id="@item.Id-FechaHasta">
+                    @item.FechaHasta.Date.ToString("yyyy-MM-dd")
+                </td>
+                <td>
+                    <input type="hidden" value="@item.IdGarante" id="@item.Id-IdGarante" />
+                    @item.Garante.Nombre @item.Garante.Apellido
+                </td>
+                <td>
+                    <a href="javascript:editar(@item.Id)">
+                        Editar
+                    </a> |
+                    @Html.ActionLink("Detalles", "Details", new { id=item.Id  }) |
+                    @Html.ActionLink("Borrar", "Delete", new {  id=item.Id  })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editarModalLabel">Editar Contrato</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Edit">
+                    <input type="hidden" id="Id" name="Id" value="" />
+                    <div class="form-group">
+                        <label class="control-label">Inquilino</label>
+                        <select class="form-control" name="IdInquilino" id="IdInquilino">
+                            @foreach (var item in (IList<Inquilino>)ViewBag.Inquilinos)
+                            {
+                                <option value="@item.idInquilino">@(item.nombre + " " + item.apellido)</option>
+                            }
+                        </select>
+                        <span for="IdInquilino" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Inmueble</label>
+                        <select class="form-control" name="IdInmueble" id="IdInmueble">
+                            @foreach (var item in (IList<Inmueble>)ViewBag.Inmuebles)
+                            {
+                                <option value="@item.Id">@(item.Direccion)</option>
+                            }
+                        </select>
+                        <span for="IdInmueble" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="FechaDesde" class="control-label">Fecha Ingreso</label>
+                        <input type="date" name="FechaDesde" class="form-control" id="FechaDesde"/>
+                        <span for="FechaDesde" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="FechaHasta" class="control-label">Fecha Salida</label>
+                        <input type="date" name="FechaHasta" class="form-control" id="FechaHasta" />
+                        <span for="FechaHasta" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Garante</label>
+                        <select class="form-control" name="IdGarante" id="IdGarante">
+                            @foreach (var item in (IList<Garante>)ViewBag.Garantes)
+                            {
+                                <option value="@item.Id">@(item.Nombre + " " + item.Apellido)</option>
+                            }
+                        </select>
+                        <span for="IdGarante" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Editar" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

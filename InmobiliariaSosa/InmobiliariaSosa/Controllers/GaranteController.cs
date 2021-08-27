@@ -19,6 +19,7 @@ namespace InmobiliariaSosa.Controllers
         // GET: GaranteController
         public ActionResult Index()
         {
+            ViewBag.error = TempData["error"];
             var i =gd.obtenerTodo();
             return View(i);
         }
@@ -46,9 +47,10 @@ namespace InmobiliariaSosa.Controllers
                 gd.alta(g);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                TempData["error"] = ex.Message;
+                return RedirectToAction(nameof(Index));
             }
         }
 
@@ -68,9 +70,10 @@ namespace InmobiliariaSosa.Controllers
                 gd.Modificacion(g);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                TempData["error"] = ex.Message;
+                return RedirectToAction(nameof(Index));
             }
         }
 
@@ -92,9 +95,10 @@ namespace InmobiliariaSosa.Controllers
                 gd.Baja(id);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                TempData["error"] = ex.Message;
+                return RedirectToAction(nameof(Index));
             }
         }
     }

@@ -91,9 +91,10 @@ namespace InmobiliariaSosa.Controllers
                 idata.Baja(id);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                TempData["error"] = ex.Message;
+                return RedirectToAction(nameof(Index));
             }
         }
     }

@@ -107,7 +107,7 @@ namespace InmobiliariaSosa.Models
             {
                 
                 string sql = $"UPDATE Contrato SET " +
-                    $"idInquilino=@idInquilino, idInmueble=idInmueble, fechaDesde=@fechaDesde, fechaHasta=@fechaHasta, idGarante=@idGarante " +
+                    $"idInquilino=@idInquilino, idInmueble=@idInmueble, fechaDesde=@fechaDesde, fechaHasta=@fechaHasta, idGarante=@idGarante " +
                     $"WHERE id = @id";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {

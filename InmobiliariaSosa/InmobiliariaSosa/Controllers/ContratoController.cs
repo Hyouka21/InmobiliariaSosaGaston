@@ -25,6 +25,7 @@ namespace InmobiliariaSosa.Controllers
         // GET: ContratoController
         public ActionResult Index()
         {
+            ViewBag.error = TempData["error"];
             ViewBag.Inquilinos = idata.obtenerTodo();
             ViewBag.Inmuebles = inmdata.obtenerTodo();
             ViewBag.Garantes = gdata.obtenerTodo();
@@ -55,9 +56,10 @@ namespace InmobiliariaSosa.Controllers
                 cdata.alta(c);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                TempData["error"] = ex.Message;
+                return RedirectToAction(nameof(Index));
             }
         }
 
@@ -77,9 +79,10 @@ namespace InmobiliariaSosa.Controllers
                 cdata.Modificacion(c);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                TempData["error"] = ex.Message;
+                return RedirectToAction(nameof(Index));
             }
         }
 
@@ -100,9 +103,10 @@ namespace InmobiliariaSosa.Controllers
                 cdata.Baja(id);
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                TempData["error"] = ex.Message;
+                return RedirectToAction(nameof(Index));
             }
         }
     }

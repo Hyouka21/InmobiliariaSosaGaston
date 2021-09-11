@@ -20,6 +20,7 @@ namespace InmobiliariaSosa.Controllers
         // GET: PropietarioController
         public ActionResult Index()
         {
+            
             ViewBag.error = TempData["error"];
             var list =pd.obtenerTodo();
             return View(list);

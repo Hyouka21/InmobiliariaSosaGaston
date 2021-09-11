@@ -1,0 +1,55 @@
+﻿@model InmobiliariaSosa.Models.Pago
+
+@{
+    ViewData["Title"] = "Detalles";
+    var con = ViewBag.contrato;
+}
+
+<h1>Detalles</h1>
+
+<div>
+    <h4>Pago</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NumeroPago)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NumeroPago)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaPago)
+        </dt>
+        <dd class="col-sm-10">
+            @(Model.FechaPago)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Monto)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Monto)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ContratoId)
+        </dt>
+        <dd class = "col-sm-10">
+            @(Model.Contrato.Inmueble.Direccion+"--"+ Model.Contrato.Inquilino.dni)
+        </dd>
+        <dt class="col-sm-2">
+            @( Model.FechaUpdate.HasValue ? Html.DisplayNameFor(model => model.FechaUpdate): "")
+        </dt>
+        <dd class="col-sm-10">
+            
+            @(Model.FechaUpdate.HasValue ? Model.FechaUpdate.Value:"")
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Volver a pagos", "Index", new {  id = Model.ContratoId })
+</div>

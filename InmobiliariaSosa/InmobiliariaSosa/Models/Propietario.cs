@@ -8,7 +8,7 @@ namespace InmobiliariaSosa.Models
 {
     public class Propietario
     {
-		[Display(Name = "Codigo")]
+		[Display(Name = "Código")]
 		public int idPropietario { get; set; }
 		[Required]
 		public string nombre { get; set; }

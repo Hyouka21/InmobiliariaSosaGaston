@@ -1,0 +1,208 @@
+﻿@model IEnumerable<InmobiliariaSosa.Models.Usuario>
+
+@{
+    ViewData["Title"] = "Usuarios";
+}
+<script type="text/javascript" onl>
+    function editar(x){
+
+        $("#editarModal").modal("show");
+
+        var nombre = $('#' + x + '-nombre')[0].innerText;
+        var apellido = $('#' + x + '-apellido')[0].innerText;
+        var email = $('#' + x + '-email')[0].innerText;
+        var rol = $('#rol')[0].value;
+        $("#Id")[0].value = x;
+        $("#Nombre")[0].value = nombre;
+        $("#Apellido")[0].value = apellido;
+
+        $("#Email")[0].value = email;
+
+        $("#Select option:selected").removeAttr("selected");
+        $(`#Select option[value="${rol}"]`).attr("selected", true);
+
+    }
+</script>
+
+<h1>Usuarios</h1>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearModal">
+    Crear Usuario
+</button>
+
+<div class="modal fade" id="crearModal" tabindex="-1" aria-labelledby="crearModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="crearModalLabel">Crear Usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Create" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label for="Nombre" class="control-label">Nombre</label>
+                        <input name="Nombre" class="form-control" />
+                        <span for="Nombre" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Apellido" class="control-label">Apellido</label>
+                        <input name="Apellido" class="form-control" />
+                        <span for="Apellido" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Email" class="control-label">Email</label>
+                        <input name="Email" type="email" class="form-control" />
+                        <span for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Clave" class="control-label">Contraseña</label>
+                        <input name="Clave" type="password" class="form-control" />
+                        <span for="Clave" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="AvatarFile" class="control-label">Foto de perfil</label>
+                        <input type="file" name="AvatarFile" />
+                        <span for="AvatarFile" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Rol</label>
+                        <select class="form-control" name="Rol">
+                            @foreach (var kvp in (IDictionary<int, string>)ViewBag.Roles)
+                            {
+                                <option value="@kvp.Key">@kvp.Value</option>
+}
+                        </select>
+                        <span for="Rol" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Crear" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apellido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Avatar)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.RolNombre)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td id="@item.Id-nombre">
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td id="@item.Id-apellido">
+                    @Html.DisplayFor(modelItem => item.Apellido)
+                </td>
+                <td id="@item.Id-email">
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+
+                <td>
+                    <img width="32" src="@item.Avatar" />
+                </td>
+
+                <td >
+                    <input type="hidden" value="@item.Rol" id="rol"/>
+                    @Html.DisplayFor(modelItem => item.RolNombre)
+                </td>
+                <td>
+                    
+                    <a href="javascript:editar(@item.Id)" title="Editar">
+
+                        <span class="lnr lnr-pencil"></span>
+                    </a>
+                    <a asp-action="details" asp-route-id="@item.Id" title="Detalles"><span class="lnr lnr-pushpin"></span></a>
+                    <a asp-action="delete" asp-route-id="@item.Id" title="Eliminar"><span class="lnr lnr-cross"></span></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editarModalLabel">Editar Usuario</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Edit" enctype="multipart/form-data" >
+                    <input type="hidden" id="Id" name="Id" value="" />
+                    <div class="form-group">
+                        <label for="Nombre" class="control-label">Nombre</label>
+                        <input name="Nombre" class="form-control" id="Nombre" required />
+                        <span for="Nombre" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Apellido" class="control-label">Apellido</label>
+                        <input name="Apellido" class="form-control" id="Apellido"  required />
+                        <span for="Apellido" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Email" class="control-label">Email</label>
+                        <input name="Email" type="email" class="form-control" id="Email" required />
+                        <span for="Email" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="Clave" class="control-label">Nueva Contraseña</label>
+                        <input name="Clave" type="password" class="form-control" />
+                        <span for="Clave" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="AvatarFile" class="control-label">Foto de perfil</label>
+                        <input type="file" name="AvatarFile" />
+                        <span for="AvatarFile" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Rol</label>
+                        <select class="form-control" name="Rol" id="Select" required>
+                            @foreach (var kvp in (IDictionary<int, string>)ViewBag.Roles)
+                            {
+                                <option value="@kvp.Key">@kvp.Value</option>
+                            }
+                        </select>
+                        <span for="Rol" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Editar" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

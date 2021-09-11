@@ -1,0 +1,152 @@
+﻿@model IEnumerable<InmobiliariaSosa.Models.Pago>
+
+@{
+    ViewData["Title"] = "Pagos";
+    int numeroPago = Model.Count() + 1;
+    int idContrato= ViewBag.idContratoR;
+    var hoy = DateTime.Now.Date.ToString();
+    var con = ViewBag.contrato;
+    var saldo = ViewBag.contrato.Precio;
+
+
+}
+<script type="text/javascript" onl>
+
+    function editar(x){
+
+        $("#editarModal").modal("show");
+
+        var numeroP = $('#' + x + '-Numero')[0].innerText;
+        var monto = $('#' + x + '-Monto')[0].innerText;
+        $("#NumeroPago")[0].value = numeroP;
+        $("#Id")[0].value = x;
+        $("#Monto")[0].value = monto;
+
+
+    }
+</script>
+<h1>
+    Pagos del contrato del inmueble con direccion en  @con.Inmueble.Direccion
+    del inquilino de nombre @con.Inquilino.nombre @con.Inquilino.apellido
+</h1>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearModal">
+    Crear Pago
+</button>
+
+<div class="modal fade" id="crearModal" tabindex="-1" aria-labelledby="crearModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="crearModalLabel">Crear Pago</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" name="ContratoId" class="form-control" value="@(idContrato)" />
+                    <input type="hidden" name="NumeroPago" class="form-control" value="@(numeroPago)" />
+                    <input type="hidden" name="FechaPago" class="form-control" value="@(hoy)" />
+                    <div class="form-group">
+                        <label for="" class="control-label">Monto del contrato @saldo </label>
+                        
+                    </div>
+                    <div class="form-group">
+                        <label for="Monto" class="control-label">Precio</label>
+                        <input name="Monto" class="form-control" />
+                        <span for="Monto" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Crear" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumeroPago)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaPago)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Monto)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                    
+                </td>
+                <td id="@item.Id-Numero">
+                    @Html.DisplayFor(modelItem => item.NumeroPago)
+                </td>
+                <td>
+                    @(item.FechaPago)
+                </td>
+                <td id="@item.Id-Monto">
+                    @Html.DisplayFor(modelItem => item.Monto)
+                </td>
+
+                <td>
+                    
+                    <a href="javascript:editar(@item.Id)" title="Editar">
+
+                        <span class="lnr lnr-pencil"></span>
+                    </a>
+                    <a asp-action="details" asp-route-id="@item.Id" title="Detalles"><span class="lnr lnr-pushpin"></span></a>
+                    <a asp-action="delete" asp-route-id="@item.Id" title="Eliminar"><span class="lnr lnr-cross"></span></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editarModalLabel">Editar Pago</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Edit">
+                    <input type="hidden" id="Id" name="Id" value="" />
+                    <input type="hidden" name="ContratoId" class="form-control" value="@(idContrato)" />
+                    <div class="form-group">
+                        <label for="" class="control-label">Numero de pago </label>
+                        <input type="text" name="NumeroPago" id="NumeroPago" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label">Monto del contrato @saldo </label>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="Monto" class="control-label">Precio</label>
+                        <input name="Monto" class="form-control" id="Monto" required/>
+                        <span for="Monto" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Editar" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

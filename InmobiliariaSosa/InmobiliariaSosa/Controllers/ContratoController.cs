@@ -17,7 +17,8 @@ namespace InmobiliariaSosa.Controllers
         private GaranteData gdata;
         public ContratoController(IConfiguration configuration)
         {
-            cdata= new ContratoData(configuration);
+            
+            cdata = new ContratoData(configuration);
             idata = new InquilinoData(configuration);
             inmdata = new InmuebleData(configuration);
             gdata = new GaranteData(configuration);
@@ -32,11 +33,25 @@ namespace InmobiliariaSosa.Controllers
             var c = cdata.obtenerTodo();
             return View(c);
         }
-
+        // GET: Propietario/Buscar/5
+        [Route("[controller]/Buscar", Name = "Buscar")]
+        public IActionResult Buscar(BusquedaInmueble busInm)
+        {
+            try
+            {
+                var lista = inmdata.obtenerInmuebles(busInm.Desde, busInm.Hasta, busInm.Id);
+                return Json(new { lista });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Error = ex.Message });
+            }
+        }
         // GET: ContratoController/Details/5
         public ActionResult Details(int id)
         {
             var c = cdata.ObtenerPorId(id);
+            
             return View(c);
         }
 

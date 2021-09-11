@@ -8,7 +8,7 @@ namespace InmobiliariaSosa.Models
 {
     public class Garante
     {
-		[Display(Name = "Codigo")]
+		[Display(Name = "Código")]
 		public int Id { get; set; }
 		[Required]
 		public string Nombre { get; set; }
@@ -18,6 +18,7 @@ namespace InmobiliariaSosa.Models
 		[Required]
 		public string Dni { get; set; }
 		[Required]
+		[Display(Name = "Teléfono")]
 		public string Telefono { get; set; }
 		
 		[Required]

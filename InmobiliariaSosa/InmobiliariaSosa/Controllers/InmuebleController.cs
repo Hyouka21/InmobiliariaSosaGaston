@@ -16,15 +16,24 @@ namespace InmobiliariaSosa.Controllers
         // GET: InmuebleController
         public InmuebleController(IConfiguration configuration)
         {
+            
             idata = new InmuebleData(configuration);
             pdata = new PropietarioData(configuration);
         }
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
-            ViewBag.error = TempData["error"];
-            ViewBag.Propietarios = pdata.obtenerTodo();
-            var inmuebles = idata.obtenerTodo();
-            return View(inmuebles);
+            ViewBag.Roles = Usuario.ObtenerRoles();
+            if (id == 0)
+            {
+                ViewBag.error = TempData["error"];
+                ViewBag.Propietarios = pdata.obtenerTodo();
+                var inmuebles = idata.obtenerTodo();
+                return View(inmuebles);
+            }
+            else
+            {
+                return View();
+            }
         }
 
         // GET: InmuebleController/Details/5

@@ -14,11 +14,13 @@ namespace InmobiliariaSosa.Controllers
         private GaranteData gd;
         public GaranteController(IConfiguration configuration)
         {
+            
             gd = new GaranteData(configuration);
         }
         // GET: GaranteController
         public ActionResult Index()
         {
+            ViewBag.Roles = Usuario.ObtenerRoles();
             ViewBag.error = TempData["error"];
             var i =gd.obtenerTodo();
             return View(i);

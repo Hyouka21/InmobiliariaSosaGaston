@@ -8,7 +8,7 @@ namespace InmobiliariaSosa.Models
 {
     public class Contrato
     {
-		[Display(Name = "Codigo")]
+		[Display(Name = "Código")]
 		public int Id { get; set; }
 		[Required]
 		[Display(Name = "Inquilino")]
@@ -17,18 +17,22 @@ namespace InmobiliariaSosa.Models
 		[Display(Name = "Inmueble")]
 		public int IdInmueble { get; set; }
 		[Required]
+		[Display(Name = "Desde")]
 		public DateTime FechaDesde { get; set; }
 		[Required]
+		[Display(Name = "Hasta")]
 		public DateTime FechaHasta { get; set; }
 
 		[Required]
 		[Display(Name = "Garante")]
 		public int IdGarante { get; set; }
 
-
+		public DateTime? FechaCancelado { get; set; }
 		public Inquilino Inquilino { get; set; }
 		public Inmueble Inmueble { get; set; }
 		public Garante Garante { get; set; }
-	
+		public decimal Precio { get; set; }
+		public int Estado { get; set; }
+
 	}
 }

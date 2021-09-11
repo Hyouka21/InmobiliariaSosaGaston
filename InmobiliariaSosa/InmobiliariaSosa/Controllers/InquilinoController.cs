@@ -15,10 +15,12 @@ namespace InmobiliariaSosa.Controllers
         private InquilinoData idata;
         public InquilinoController(IConfiguration configuration)
         {
+
             idata = new InquilinoData(configuration);
         }
         public ActionResult Index()
         {
+            ViewBag.Roles = Usuario.ObtenerRoles();
             ViewBag.error = TempData["error"];
             var lista = idata.obtenerTodo();
             return View(lista);

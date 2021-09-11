@@ -118,11 +118,14 @@
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
                 <td>
-                    <a href="javascript:editar(@item.Id)">
-                        Editar
-                    </a> |
-                    @Html.ActionLink("Detalles", "Details", new {  id=item.Id }) |
-                    @Html.ActionLink("Borrar", "Delete", new {  id=item.Id })
+                    
+
+                    <a href="javascript:editar(@item.Id)" title="Editar">
+
+                        <span class="lnr lnr-pencil"></span>
+                    </a>
+                    <a asp-action="details" asp-route-id="@item.Id" title="Detalles"><span class="lnr lnr-pushpin"></span></a>
+                    <a asp-action="delete" asp-route-id="@item.Id" title="Eliminar"><span class="lnr lnr-cross"></span></a>
                 </td>
             </tr>
         }

@@ -4,6 +4,93 @@
     ViewData["Title"] = "Contrato";
 }
 <script type="text/javascript" onl>
+    function calcular(x,pre,fec) {
+        var fechadesde = $('#' + x + '-FechaDesde')[0].innerText+"";
+        var fechahasta = $('#' + x + '-FechaHasta')[0].innerText + "";
+        var hoy = moment(fec);
+        var fecha1 = moment(fechadesde);
+        var fecha2 = moment(fechahasta);
+        console.log(hoy);
+        console.log(fecha1);
+        var difhoy = hoy.diff(fecha1, 'days');
+        var dif = fecha2.diff(fecha1, 'days');
+        var mitad = dif / 2;
+        if (mitad > difhoy) {
+            var total = pre * 2;
+            alert("debera pagar como multa $" + total + " pesos por cancelar y permanecer menos de la mitad del tiempo");
+        } else {
+            var total = pre;
+            alert("debera pagar como multa $" + total + " pesos por cancelar y permanecer mas de la mitad del tiempo")
+        }
+        console.log(dif);
+        console.log(difhoy);
+    }
+    function buscar(a) {
+        if (a == 0) {
+            $("#selectNew").empty();
+            var desde = $('#desdeNew')[0].value;
+            var hasta = $('#hastaNew')[0].value;
+            return $.ajax({//documentación: https://api.jquery.com/jquery.ajax/
+                url: `@Url.Action("Buscar", "Contrato")`, // localhoosy/Contrato/Buscar
+                method: "POST",
+                data: {
+                    id: 0,
+                    desde: desde,
+                    hasta: hasta
+                },
+                dataType: "json"
+            }).done(res => {
+                $('#ocultoNew').css("display", "block");
+             
+                $.each(res, function (i, item) {
+                    for (var val in item) {
+                     
+                        $('#selectNew').append($('<option>', {
+                            value: item[val].id,
+                            text: item[val].direccion
+                        }));
+                    }
+                });
+            }).fail(res => {
+                console.log("Error: ", res);
+            });
+
+        } else {
+            $("#selectNew").empty();
+            var desde = $('#FechaDesde')[0].value;
+            var hasta = $('#FechaHasta')[0].value;
+            return $.ajax({//documentación: https://api.jquery.com/jquery.ajax/
+                url: `@Url.Action("Buscar", "Contrato")`,
+                method: "POST",
+                data: {
+                    id: a,
+                    desde: desde,
+                    hasta: hasta
+                },
+                dataType: "json"
+            }).done(res => {
+                $("#IdInmueble").empty();
+
+                $.each(res, function (i, item) {
+                    for (var val in item) {
+
+                        $('#IdInmueble').append($('<option>', {
+                            value: item[val].id,
+                            text: item[val].direccion
+                        }));
+                    }
+                });
+            }).fail(res => {
+                console.log("Error: ", res);
+            });
+        }
+    }
+    function seguro() {
+        var respuesta = confirm("Esta seguro de cancelar este pago? (recuerde que no podra revertirse este cambio)");
+        
+        return respuesta;
+        
+    }
     function editar(x){
 
         $("#editarModal").modal("show");
@@ -13,15 +100,22 @@
         var fechadesde = $('#' + x + '-FechaDesde')[0].innerText;
         var fechahasta = $('#' + x + '-FechaHasta')[0].innerText;
         var garante = $('#' + x + '-IdGarante')[0].value;
+        var precio = $('#' + x + '-Precio')[0].innerText;
+        var estado = $('#' + x + '-Estado')[0].innerText == "Disponible" ? 0 : 1;
         $("#Id")[0].value = x;
         $("#FechaDesde")[0].value = fechadesde;
         $("#FechaHasta")[0].value = fechahasta;
+        $("#precioEdit")[0].value = precio;
+
+        $("#btnEdit").attr('onclick', `buscar(${inmueble});`);
         $("#IdInquilino option:selected").removeAttr("selected");
         $("#IdInquilino option[value=" + inquilino + "]").attr("selected", true);
         $("#IdInmueble option:selected").removeAttr("selected");
         $("#IdInmueble option[value=" + inmueble + "]").attr("selected", true);
         $("#IdGarante option:selected").removeAttr("selected");
         $("#IdGarante option[value=" + garante + "]").attr("selected", true);
+        $("#Estado option:selected").removeAttr("selected");
+        $("#Estado option[value=" + estado + "]").attr("selected", true);
 
     }
 </script>
@@ -53,27 +147,27 @@
                         </select>
                         <span for="IdInquilino" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label">Inmueble</label>
-                        <select class="form-control" name="IdInmueble">
-                            @foreach (var item in (IList<Inmueble>)ViewBag.Inmuebles)
-                            {
-                                <option value="@item.Id">@(item.Direccion)</option>
-                            }
-                        </select>
-                        <span for="IdInmueble" class="text-danger"></span>
-                    </div>
+
                     <div class="form-group">
                         <label for="FechaDesde" class="control-label">Fecha Ingreso</label>
-                        <input type="date" name="FechaDesde" class="form-control" />
+                        <input type="date" name="FechaDesde" class="form-control" id="desdeNew"/>
                         <span for="FechaDesde" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="FechaHasta" class="control-label">Fecha Salida</label>
-                        <input type="date" name="FechaHasta" class="form-control" />
+                        <input type="date" name="FechaHasta" class="form-control" id="hastaNew"/>
                         <span for="FechaHasta" class="text-danger"></span>
                     </div>
-
+                    <div class="form-group">
+                        <input type="button" value="Buscar" class="btn btn-primary" onclick="buscar(0);"/>
+                    </div>
+                    <div class="form-group" id="ocultoNew" style="display: none;">
+                        <label class="control-label">Inmueble</label>
+                        <select class="form-control" id="selectNew" name="IdInmueble">
+                            
+                        </select>
+                        <span for="IdInmueble" class="text-danger"></span>
+                    </div>
                     <div class="form-group">
                         <label class="control-label">Garante</label>
                         <select class="form-control" name="IdGarante">
@@ -83,6 +177,11 @@
                             }
                         </select>
                         <span for="IdGarante" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Precio" class="control-label" >Precio</label>
+                        <input name="Precio" class="form-control" />
+                        <span for="Precio" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <input type="submit" value="Crear" class="btn btn-primary" />
@@ -113,42 +212,76 @@
             <th>
                 @Html.DisplayNameFor(model => model.IdGarante)
             </th>
-            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
+                Acción
+            </th>
+            <th>
+                Pagos
+            </th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td id="@item.Id-Id">
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td >
-                    <input type="hidden" value="@item.IdInquilino" id="@item.Id-IdInquilino" />
-                    @item.Inquilino.nombre @item.Inquilino.apellido
-                </td>
-                <td>
-                    <input type="hidden" value="@item.IdInmueble" id="@item.Id-IdInmueble" />
-                    @item.Inmueble.Direccion
-                </td>
-                <td id="@item.Id-FechaDesde">
-                    @item.FechaDesde.Date.ToString("yyyy-MM-dd")
-                </td>
-                <td id="@item.Id-FechaHasta">
-                    @item.FechaHasta.Date.ToString("yyyy-MM-dd")
-                </td>
-                <td>
-                    <input type="hidden" value="@item.IdGarante" id="@item.Id-IdGarante" />
-                    @item.Garante.Nombre @item.Garante.Apellido
-                </td>
-                <td>
-                    <a href="javascript:editar(@item.Id)">
-                        Editar
-                    </a> |
-                    @Html.ActionLink("Detalles", "Details", new { id=item.Id  }) |
-                    @Html.ActionLink("Borrar", "Delete", new {  id=item.Id  })
-                </td>
-            </tr>
+        <tr>
+            <td id="@item.Id-Id">
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                <input type="hidden" value="@item.IdInquilino" id="@item.Id-IdInquilino" />
+                @item.Inquilino.nombre @item.Inquilino.apellido
+            </td>
+            <td>
+                <input type="hidden" value="@item.IdInmueble" id="@item.Id-IdInmueble" />
+                @item.Inmueble.Direccion
+            </td>
+            <td id="@item.Id-FechaDesde">
+                @item.FechaDesde.Date.ToString("yyyy-MM-dd")
+            </td>
+            <td id="@item.Id-FechaHasta">
+                @item.FechaHasta.Date.ToString("yyyy-MM-dd")
+            </td>
+            <td>
+                <input type="hidden" value="@item.IdGarante" id="@item.Id-IdGarante" />
+                @item.Garante.Nombre @item.Garante.Apellido
+            </td>
+            <td id="@item.Id-Precio">
+                @Html.DisplayFor(modelItem => item.Precio)
+            </td>
+            <td id="@item.Id-Estado">
+
+                <form asp-action="Edit">
+                    <input type= "hidden" name="Id" value='@item.Id'  />
+                    <input type="hidden" name="Estado" value='1' />
+                    <input type=@(item.Estado == 0 ? "submit" : "hidden") value='Cancelar' class='btn btn-primary' onclick='return seguro();' />
+                </form>
+                
+                <input type=@(item.Estado == 1 ? "button" : "hidden") value='Informe' class='btn btn-primary' onclick='calcular("@item.Id", "@item.Precio", "@item.FechaCancelado")' />
+            </td>
+
+            <td>
+                
+
+                <a href="javascript:editar(@item.Id)" title="Editar">
+
+                    <span class="lnr lnr-pencil"></span>
+                </a>
+                <a asp-action="details" asp-route-id="@item.Id" title="Detalles"><span class="lnr lnr-pushpin"></span></a>
+                <a asp-action="delete" asp-route-id="@item.Id" title="Eliminar"><span class="lnr lnr-cross"></span></a>
+            </td>
+            <td>
+                <a asp-action="Index" asp-controller="Pago" asp-route-id="@item.Id" title="Pagos"><span class="lnr lnr-cart"></span></a>
+                
+
+
+            </td>
+        </tr>
         }
     </tbody>
 </table>
@@ -174,19 +307,10 @@
                         </select>
                         <span for="IdInquilino" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label">Inmueble</label>
-                        <select class="form-control" name="IdInmueble" id="IdInmueble">
-                            @foreach (var item in (IList<Inmueble>)ViewBag.Inmuebles)
-                            {
-                                <option value="@item.Id">@(item.Direccion)</option>
-                            }
-                        </select>
-                        <span for="IdInmueble" class="text-danger"></span>
-                    </div>
+
                     <div class="form-group">
                         <label for="FechaDesde" class="control-label">Fecha Ingreso</label>
-                        <input type="date" name="FechaDesde" class="form-control" id="FechaDesde"/>
+                        <input type="date" name="FechaDesde" class="form-control" id="FechaDesde" />
                         <span for="FechaDesde" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -194,16 +318,40 @@
                         <input type="date" name="FechaHasta" class="form-control" id="FechaHasta" />
                         <span for="FechaHasta" class="text-danger"></span>
                     </div>
+                    <div class="form-group">
+                        <input type="button" value="Buscar" id="btnEdit" class="btn btn-primary" onclick="" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Inmueble</label>
+                        <select class="form-control" name="IdInmueble" id="IdInmueble" required>
+                        </select>
+                        <span for="IdInmueble" class="text-danger"></span>
+                    </div>
 
                     <div class="form-group">
                         <label class="control-label">Garante</label>
-                        <select class="form-control" name="IdGarante" id="IdGarante">
+                        <select class="form-control" name="IdGarante" id="IdGarante" required>
                             @foreach (var item in (IList<Garante>)ViewBag.Garantes)
                             {
                                 <option value="@item.Id">@(item.Nombre + " " + item.Apellido)</option>
                             }
                         </select>
                         <span for="IdGarante" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Precio" class="control-label">Precio</label>
+                        <input name="Precio" class="form-control" id="precioEdit" />
+                        <span for="Precio" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Estado</label>
+                        <select class="form-control" name="Estado" id="Estado">
+
+                            <option value="0">Disponible</option>
+                            <option value="1">Cancelado</option>
+
+                        </select>
+                        <span for="Estado" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <input type="submit" value="Editar" class="btn btn-primary" />

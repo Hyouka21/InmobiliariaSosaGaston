@@ -6,43 +6,222 @@
     <title>@ViewData["Title"] - InmobiliariaSosa</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
+    <link rel="icon" href="~/img/favicon.png" type="image/x-icon" />
+    <script type="text/javascript" onl>
+
+        function login() {
+
+            $("#loginModal").modal("show");
+        }
+        function datos(q) {
+               $.ajax({//documentación: https://api.jquery.com/jquery.ajax/
+                url: `@Url.Action("Datos", "Usuario")`,
+                method: "POST",
+                data: {
+                    correo : q.toString()
+                },
+                dataType: "json"
+            }).done(res => {
+                $.each(res, function (i, item) {
+
+                    for (var val in item) {
+
+
+                        $("#IdUsu")[0].value = item.id;
+                        $("#NombreUsu")[0].value = item.nombre;
+                        $("#ApellidoUsu")[0].value = item.apellido;
+                        $("#EmailUsu")[0].value = item.email;
+
+                        $("#imgPerfil")[0].src = item.avatar;
+                    }
+                });
+
+
+            }).fail(res => {
+                console.log("Error: ", res);
+            });
+            $("#editarModalUsu").modal("show");
+
+
+        }
+         function enviar() {
+               $.ajax({//documentación: https://api.jquery.com/jquery.ajax/
+                url: `@Url.Action("Datos", "Usuario")`,
+                method: "POST",
+                data: {
+                    Id: q.toString(),
+                    Nombre:
+                    Apellido:
+
+
+                },
+                dataType: "json"
+            }).done(res => {
+                $.each(res, function (i, item) {
+
+                    for (var val in item) {
+
+
+                        $("#IdUsu")[0].value = item.id;
+                        $("#NombreUsu")[0].value = item.nombre;
+                        $("#ApellidoUsu")[0].value = item.apellido;
+                        $("#EmailUsu")[0].value = item.email;
+
+                        $("#imgPerfil")[0].src = item.avatar;
+                    }
+                });
+
+
+            }).fail(res => {
+                console.log("Error: ", res);
+            });
+            $("#editarModalUsu").modal("show");
+
+
+        }
+
+    </script>
 </head>
-<body>
+<body class="bg-gradient-light">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">InmobiliariaSosa</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Inquilino" asp-action="Index">Inquilino</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Garante" asp-action="Index">Garante</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Propietario" asp-action="Index">Propietario</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Inmueble" asp-action="Index">Inmueble</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Contrato" asp-action="Index">Contrato</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacidad</a>
-                        </li>
-                    </ul>
-                </div>
+     
+        <nav class="site-header py-1">
+            <!-- sticky-top -->
+            <div class="container d-flex flex-column flex-md-row justify-content-between">
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <a class="py-2" asp-controller="Home" asp-action="Index"><span class="lnr lnr-home"></span> Inicio</a>
+                    <a class="py-2 d-none d-md-inline-block float-right" href="javascript:login()">
+                        <span class="lnr lnr-enter"></span> Acceder
+                    </a>
+                }
+                else
+                {
+                    <div class="dropdown">
+                        <a class="btn btn-primary dropdown-toggle text-light" href="#" role="button" id="homeMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent" data-display="static">
+                            <span class="lnr lnr-home"></span> Inicio
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item text-dark" asp-controller="Home" asp-action="Index"><span class="lnr lnr-home"></span> Inicio</a>
+
+                        </div>
+                    </div>
+                    @if (User.IsInRole("Administrador") || User.IsInRole("SuperAdministrador"))
+                    {
+
+                        <a class="py-2 d-none d-md-inline-block" asp-controller="Usuario" asp-action="Index"><span class="lnr lnr-star"></span> Usuarios</a>}
+                    <div class="dropdown">
+                        <a class="btn btn-primary dropdown-toggle text-light" href="#" role="button" id="personaMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent" data-display="static">
+                            <span class="lnr lnr-users"></span> Personas
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item text-dark" asp-controller="Propietario" asp-action="Index"><span class="lnr lnr-user"></span> Propietarios</a>
+                            <a class="dropdown-item text-dark" asp-controller="Garante" asp-action="Index"><span class="lnr lnr-user"></span> Garantes</a>
+                            <a class="dropdown-item text-dark" asp-controller="Inquilino" asp-action="Index"><span class="lnr lnr-user"></span> Inquilinos</a>
+                        </div>
+                    </div>
+
+                    <a class="py-2 d-none d-md-inline-block" asp-controller="Inmueble" asp-action="Index"><span class="lnr lnr-apartment"></span> Inmuebles</a>
+                    <a class="py-2 d-none d-md-inline-block" asp-controller="Contrato" asp-action="Index"><span class="lnr lnr-enter"></span> Contratos</a>
+                    <div class="dropdown">
+                        <a class="btn btn-primary dropdown-toggle text-light" href="#" role="button" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent" data-display="static">
+                            <span class="lnr lnr-user"></span> @User.Identity.Name
+                        </a>
+
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <a class="dropdown-item text-dark"   href='javascript:datos("@User.Identity.Name.ToString()")' ><i class="lnr lnr-user"></i> Perfil</a>
+                            <a class="dropdown-item text-dark" asp-controller="Usuario" asp-action="Logout"><i class="lnr lnr-exit"></i> Salir</a>
+                        </div>
+                    </div>}
             </div>
         </nav>
+        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="loginModalLabel">Iniciar Sesion</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form asp-controller="Usuario" asp-action="Login">
+
+                            <div class="form-group">
+                                <label for="Email" class="control-label">Email </label>
+                                <input type="email" name="Email" class="form-control" required />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Clave" class="control-label">Contraseña</label>
+                                <input type="password" name="Clave" class="form-control" required />
+                                <span for="Clave" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Iniciar Sesion" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="editarModalUsu" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editarModalLabel">Editar Usuario</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form asp-action="Perfil" asp-controller="Usuario" enctype="multipart/form-data">
+                            <input type="hidden" id="IdUsu" name="Id" value="" />
+                            <div class="form-group">
+                                <label for="Nombre" class="control-label">Nombre</label>
+                                <input name="Nombre" class="form-control" id="NombreUsu" required />
+                                <span for="Nombre" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="Apellido" class="control-label">Apellido</label>
+                                <input name="Apellido" class="form-control" id="ApellidoUsu" required />
+                                <span for="Apellido" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="Email" class="control-label">Email</label>
+                                <input name="Email" type="email" class="form-control" id="EmailUsu" required />
+                                <span for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="Clave" class="control-label">Antigua Contraseña</label>
+                                <input name="Clave" type="password" class="form-control" />
+                                <span for="Clave" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label for="Clave" class="control-label">Nueva Contraseña</label>
+                                <input name="ClaveNueva" type="password" class="form-control" />
+                                <span for="Clave" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <img width="32" src="" id="imgPerfil"/>
+                                
+                            </div>
+                            <div class="form-group">
+                                <label for="AvatarFile" class="control-label">Foto de perfil</label>
+                                <input type="file" name="AvatarFile" />
+                                <span for="AvatarFile" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Editar" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </header>
     <div class="container">
         @if (ViewBag.error != null)
@@ -56,12 +235,16 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - InmobiliariaSosa - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacidad</a>
+            &copy; @DateTime.Today.Year - InmobiliariaSosa -  <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacidad</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="//momentjs.com/downloads/moment.min.js"></script>
+    <script src="https://kit.fontawesome.com/6894de73e8.js" crossorigin="anonymous"></script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -1,4 +1,5 @@
 ﻿using InmobiliariaSosa.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -9,19 +10,21 @@ using System.Threading.Tasks;
 
 namespace InmobiliariaSosa.Controllers
 {
+    [Authorize]
     public class ContratoController : Controller
     {
-        private ContratoData cdata;
-        private InquilinoData idata;
-        private InmuebleData inmdata;
-        private GaranteData gdata;
-        public ContratoController(IConfiguration configuration)
+        
+        private IContratoData cdata;
+        private IInquilinoData idata;
+        private IInmuebleData inmdata;
+        private IGaranteData gdata;
+        public ContratoController(IConfiguration configuration,IContratoData contratoI,IInquilinoData inquilino,IInmuebleData inmueble , IGaranteData garante)
         {
             
-            cdata = new ContratoData(configuration);
-            idata = new InquilinoData(configuration);
-            inmdata = new InmuebleData(configuration);
-            gdata = new GaranteData(configuration);
+            cdata = contratoI ;
+            idata = inquilino;
+            inmdata = inmueble;
+            gdata = garante;
         }
         // GET: ContratoController
         public ActionResult Index()

@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace InmobiliariaSosa.Models
 {
-    public class PropietarioData : Data
+    public class PropietarioData : Data, IPropietarioData
     {
-        
+
         public PropietarioData(IConfiguration configuration) : base(configuration)
         {
 

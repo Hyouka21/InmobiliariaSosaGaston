@@ -45,7 +45,7 @@
 
 
         }
-         function enviar() {
+         /*function enviar() {
                $.ajax({//documentación: https://api.jquery.com/jquery.ajax/
                 url: `@Url.Action("Datos", "Usuario")`,
                 method: "POST",
@@ -79,7 +79,7 @@
             $("#editarModalUsu").modal("show");
 
 
-        }
+        }*/
 
     </script>
 </head>
@@ -227,6 +227,14 @@
         @if (ViewBag.error != null)
         {
             <p>@ViewBag.error</p>
+        }
+        @if (ViewBag.mensaje != null)
+        {
+            <p>@ViewBag.mensaje</p>
+        }
+        @if (ViewBag.correcto != null)
+        {
+            <p>@ViewBag.correcto</p>
         }
         <main role="main" class="pb-3">
             @RenderBody()

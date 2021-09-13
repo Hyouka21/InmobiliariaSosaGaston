@@ -1,4 +1,5 @@
 ﻿using InmobiliariaSosa.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -9,13 +10,14 @@ using System.Threading.Tasks;
 
 namespace InmobiliariaSosa.Controllers
 {
+    [Authorize]
     public class GaranteController : Controller
     {
-        private GaranteData gd;
-        public GaranteController(IConfiguration configuration)
+        private IGaranteData gd;
+        public GaranteController(IConfiguration configuration,IGaranteData garante)
         {
             
-            gd = new GaranteData(configuration);
+            gd =garante;
         }
         // GET: GaranteController
         public ActionResult Index()

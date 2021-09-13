@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace InmobiliariaSosa.Models
 {
-    public class InquilinoData : Data
+    public class InquilinoData : Data, IInquilinoData
     {
-        
-        public InquilinoData(IConfiguration configuration):base(configuration)
+
+        public InquilinoData(IConfiguration configuration) : base(configuration)
         {
 
         }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace InmobiliariaSosa.Models
 {
-    public class PagoData : Data
+    public class PagoData : Data, IPagoData
     {
         public PagoData(IConfiguration configuration) : base(configuration)
         {
@@ -23,7 +23,7 @@ namespace InmobiliariaSosa.Models
                 using (SqlCommand com = new SqlCommand(sql, con))
                 {
                     com.Parameters.AddWithValue("@numeroPago", i.NumeroPago);
-                    com.Parameters.AddWithValue("@fechaPago",  DateTime.Now);
+                    com.Parameters.AddWithValue("@fechaPago", DateTime.Now);
                     com.Parameters.AddWithValue("@monto", i.Monto);
                     com.Parameters.AddWithValue("@contratoId", i.ContratoId);
 
@@ -53,40 +53,40 @@ namespace InmobiliariaSosa.Models
                     {
                         while (reader.Read())
                         {
-                           
-                                Pago i = new Pago
+
+                            Pago i = new Pago
+                            {
+                                Id = reader.GetInt32(0),
+                                NumeroPago = reader.GetInt32(1),
+                                FechaPago = reader.GetDateTime(2),
+                                Monto = reader.GetDecimal(3),
+                                ContratoId = reader.GetInt32(4),
+                                Contrato = new Contrato
                                 {
-                                    Id = reader.GetInt32(0),
-                                    NumeroPago = reader.GetInt32(1),
-                                    FechaPago = reader.GetDateTime(2),
-                                    Monto = reader.GetDecimal(3),
-                                    ContratoId = reader.GetInt32(4),
-                                    Contrato = new Contrato
+                                    Id = reader.GetInt32(4),
+                                    IdInquilino = reader.GetInt32(5),
+                                    IdInmueble = reader.GetInt32(7),
+                                    Inquilino = new Inquilino
                                     {
-                                        Id = reader.GetInt32(4),
-                                        IdInquilino = reader.GetInt32(5),
-                                        IdInmueble = reader.GetInt32(7),
-                                        Inquilino = new Inquilino
-                                        {
-                                            idInquilino = reader.GetInt32(5),
-                                            dni = reader.GetString(6)
-                                        },
-                                        Inmueble = new Inmueble
-                                        {
-                                            Id = reader.GetInt32(7),
-                                            Direccion = reader.GetString(8)
-                                        },
-                                        Precio = reader.GetDecimal(9)
-
+                                        idInquilino = reader.GetInt32(5),
+                                        dni = reader.GetString(6)
                                     },
-                                    FechaUpdate = reader["fechaUpdate"] != DBNull.Value ? reader.GetDateTime(10) : null
+                                    Inmueble = new Inmueble
+                                    {
+                                        Id = reader.GetInt32(7),
+                                        Direccion = reader.GetString(8)
+                                    },
+                                    Precio = reader.GetDecimal(9)
+
+                                },
+                                FechaUpdate = reader["fechaUpdate"] != DBNull.Value ? reader.GetDateTime(10) : null
 
 
-                                };
-                                lista.Add(i);
-                       
-                                
-                          
+                            };
+                            lista.Add(i);
+
+
+
 
                         }
                     }
@@ -129,7 +129,7 @@ namespace InmobiliariaSosa.Models
                     command.Parameters.AddWithValue("@fechaUpdate", fecha);
                     command.Parameters.AddWithValue("@monto", e.Monto);
 
-                    
+
 
                     command.Parameters.AddWithValue("@id", e.Id);
                     connection.Open();
@@ -157,50 +157,54 @@ namespace InmobiliariaSosa.Models
                     var reader = command.ExecuteReader();
                     while (reader.Read())
                     {
-                        
-                            Pago i = new Pago
+
+                        Pago i = new Pago
+                        {
+                            Id = reader.GetInt32(0),
+                            NumeroPago = reader.GetInt32(1),
+                            FechaPago = reader.GetDateTime(2),
+                            Monto = reader.GetDecimal(3),
+                            ContratoId = reader.GetInt32(4),
+                            Contrato = new Contrato
                             {
-                                Id = reader.GetInt32(0),
-                                NumeroPago = reader.GetInt32(1),
-                                FechaPago = reader.GetDateTime(2),
-                                Monto = reader.GetDecimal(3),
-                                ContratoId = reader.GetInt32(4),
-                                Contrato = new Contrato
+                                Id = reader.GetInt32(4),
+                                IdInquilino = reader.GetInt32(5),
+                                IdInmueble = reader.GetInt32(7),
+                                Inquilino = new Inquilino
                                 {
-                                    Id = reader.GetInt32(4),
-                                    IdInquilino = reader.GetInt32(5),
-                                    IdInmueble = reader.GetInt32(7),
-                                    Inquilino = new Inquilino
-                                    {
-                                        idInquilino = reader.GetInt32(5),
-                                        dni = reader.GetString(6)
-                                    },
-                                    Inmueble = new Inmueble
-                                    {
-                                        Id = reader.GetInt32(7),
-                                        Direccion = reader.GetString(8)
-                                    },
-                                    Precio = reader.GetDecimal(9)
-
+                                    idInquilino = reader.GetInt32(5),
+                                    dni = reader.GetString(6)
                                 },
-                                FechaUpdate = reader["fechaUpdate"]!= DBNull.Value ? reader.GetDateTime(10) : null
-                                
-                                // se compara con null para que devuelva el valor
+                                Inmueble = new Inmueble
+                                {
+                                    Id = reader.GetInt32(7),
+                                    Direccion = reader.GetString(8)
+                                },
+                                Precio = reader.GetDecimal(9)
 
-                            };
-                        
-                            return i;
-                       
-                       
+                            },
+                            FechaUpdate = reader["fechaUpdate"] != DBNull.Value ? reader.GetDateTime(10) : null
+
+                            // se compara con null para que devuelva el valor
+
+                        };
+
+                        return i;
+
+
                     }
 
-                    
-                    }
-                    connection.Close();
+
                 }
-            
+                connection.Close();
+            }
+
             return p;
         }
 
+        public IList<Pago> obtenerTodo()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

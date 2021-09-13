@@ -21,14 +21,14 @@ namespace InmobiliariaSosa.Controllers
         private readonly IWebHostEnvironment environment;
         private readonly IConfiguration configuration;
      
-        private  UsuarioData uData;
+        private  IUsuarioData uData;
         
-        public UsuarioController(IConfiguration configuration, IWebHostEnvironment environment)
+        public UsuarioController(IConfiguration configuration, IWebHostEnvironment environment,IUsuarioData usu)
         {
             ViewBag.Roles = Usuario.ObtenerRoles();
             this.configuration = configuration;
             this.environment=environment;
-            this.uData = new UsuarioData(configuration);
+            this.uData = usu;
         }
         // [Authorize(Policy = "Administrador")]
         // GET: UsuarioController
@@ -36,7 +36,7 @@ namespace InmobiliariaSosa.Controllers
         public ActionResult Index()
         {
             ViewBag.Roles = Usuario.ObtenerRoles();
-            var usu = uData.ObtenerTodos();
+            var usu = uData.obtenerTodo();
             return View(usu);
         }
 
@@ -70,7 +70,7 @@ namespace InmobiliariaSosa.Controllers
                         iterationCount: 1000,
                         numBytesRequested: 256 / 8));
                 u.Clave = hashed;               
-                int res = uData.Alta(u);
+                int res = uData.alta(u);
                 if (u.AvatarFile != null && u.Id > 0)
                 {
                     string wwwPath = environment.WebRootPath;

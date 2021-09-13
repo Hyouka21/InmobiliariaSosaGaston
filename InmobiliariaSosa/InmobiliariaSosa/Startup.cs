@@ -1,3 +1,4 @@
+using InmobiliariaSosa.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,6 +41,13 @@ namespace InmobiliariaSosa
                 options.AddPolicy("Empleado", policy => policy.RequireClaim(ClaimTypes.Role, "Administrador", "Empleado"));
                 options.AddPolicy("Administrador", policy => policy.RequireRole("Administrador", "SuperAdministrador"));
                 });
+            services.AddTransient<IPropietarioData, PropietarioData>();
+            services.AddTransient<IInquilinoData, InquilinoData>();
+            services.AddTransient<IUsuarioData, UsuarioData>();
+            services.AddTransient<IContratoData, ContratoData>();
+            services.AddTransient<IGaranteData, GaranteData>();
+            services.AddTransient<IPagoData, PagoData>();
+            services.AddTransient<IInmuebleData, InmuebleData>();
             services.AddMvc();
             services.AddSignalR();//añade signalR
         }

@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace InmobiliariaSosa.Models
 {
-    public class InmuebleData : Data
+    public class InmuebleData : Data, IInmuebleData
     {
-        public InmuebleData(IConfiguration configuration): base(configuration)
+        public InmuebleData(IConfiguration configuration) : base(configuration)
         {
 
         }
@@ -63,8 +63,9 @@ namespace InmobiliariaSosa.Models
                                 IdPropietario = reader.GetInt32(6),
                                 Precio = reader.GetDecimal(9),
                                 Estado = reader.GetByte(10),
-                                Duenio = new Propietario { 
-                                    idPropietario= reader.GetInt32(6),
+                                Duenio = new Propietario
+                                {
+                                    idPropietario = reader.GetInt32(6),
                                     nombre = reader.GetString(7),
                                     apellido = reader.GetString(8)
                                 },
@@ -161,7 +162,7 @@ namespace InmobiliariaSosa.Models
             }
             return p;
         }
-        public IList<Inmueble> obtenerInmuebles(string desde ,string hasta,int id)
+        public IList<Inmueble> obtenerInmuebles(string desde, string hasta, int id)
         {
             IList<Inmueble> lista = new List<Inmueble>();
             using (SqlConnection con = new SqlConnection(conectionString))
@@ -186,7 +187,7 @@ namespace InmobiliariaSosa.Models
                             {
                                 Id = reader.GetInt32(0),
                                 Direccion = reader.GetString(1),
-                                
+
                             };
                             lista.Add(i);
                         }
@@ -197,6 +198,17 @@ namespace InmobiliariaSosa.Models
             return lista;
         }
 
+        public int alta(Inquilino i)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Modificacion(Inquilino e)
+        {
+            throw new NotImplementedException();
+        }
+
+     
     }
 }
 

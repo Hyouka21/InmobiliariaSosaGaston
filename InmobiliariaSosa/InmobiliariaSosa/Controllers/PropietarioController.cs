@@ -1,4 +1,5 @@
 ﻿using InmobiliariaSosa.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -9,13 +10,13 @@ using System.Threading.Tasks;
 
 namespace InmobiliariaSosa.Controllers
 {
-
+    [Authorize]
     public class PropietarioController : Controller
     {
-        private PropietarioData pd;
-        public PropietarioController(IConfiguration configuration)
+        private IPropietarioData pd;
+        public PropietarioController(IConfiguration configuration,IPropietarioData pr)
         {
-            pd = new PropietarioData(configuration);
+            pd = pr;
         }
         // GET: PropietarioController
         public ActionResult Index()

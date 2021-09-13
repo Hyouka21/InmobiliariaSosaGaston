@@ -1,4 +1,5 @@
 ﻿using InmobiliariaSosa.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -9,16 +10,17 @@ using System.Threading.Tasks;
 
 namespace InmobiliariaSosa.Controllers
 {
+    [Authorize]
     public class InmuebleController : Controller
     {
-        private InmuebleData idata;
-        private PropietarioData pdata;
+        private IInmuebleData idata;
+        private IPropietarioData pdata;
         // GET: InmuebleController
-        public InmuebleController(IConfiguration configuration)
+        public InmuebleController(IConfiguration configuration,IInmuebleData inm ,IPropietarioData pro)
         {
             
-            idata = new InmuebleData(configuration);
-            pdata = new PropietarioData(configuration);
+            idata = inm;
+            pdata = pro;
         }
         public ActionResult Index(int id)
         {

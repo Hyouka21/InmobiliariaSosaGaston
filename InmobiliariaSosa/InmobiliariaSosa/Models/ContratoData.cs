@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace InmobiliariaSosa.Models
 {
-    public class ContratoData : Data
+    public class ContratoData : Data, IContratoData
     {
         public ContratoData(IConfiguration configuration) : base(configuration)
         {
@@ -141,7 +141,7 @@ namespace InmobiliariaSosa.Models
                     {
                         var fecha = DateTime.Now;
                         command.CommandType = CommandType.Text;
-                        
+
                         command.Parameters.AddWithValue("@estado", e.Estado);
                         command.Parameters.AddWithValue("@fechaCancelado", fecha);
 
@@ -205,6 +205,6 @@ namespace InmobiliariaSosa.Models
             }
             return p;
         }
-    
-}
+
+    }
 }

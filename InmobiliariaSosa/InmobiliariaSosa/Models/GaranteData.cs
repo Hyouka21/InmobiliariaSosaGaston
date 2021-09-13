@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace InmobiliariaSosa.Models
 {
-    public class GaranteData:Data
+    public class GaranteData:Data,IGaranteData
     {
         public GaranteData(IConfiguration configuration) : base(configuration)
         {

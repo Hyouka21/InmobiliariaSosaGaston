@@ -218,12 +218,8 @@
             <th>
                 @Html.DisplayNameFor(model => model.Estado)
             </th>
-            <th>
-                Acción
-            </th>
-            <th>
-                Pagos
-            </th>
+            
+           
         </tr>
     </thead>
     <tbody>
@@ -266,18 +262,18 @@
             </td>
 
             <td>
-                
+                <div class="btn-group" role="group" aria-label="">
+                    <a class="btn btn-primary" href="javascript:editar(@item.Id)" title="Editar">
 
-                <a href="javascript:editar(@item.Id)" title="Editar">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    <a class="btn btn-primary" asp-action="details" asp-route-id="@item.Id" title="Detalles"><i class="fas fa-info-circle"></i></a>
+                    <a class="btn btn-danger" asp-action="delete" asp-route-id="@item.Id" title="Eliminar"><i class="fas fa-trash"></i></a>
+                    <a class="btn btn-primary" asp-action="Index" asp-controller="Pago" asp-route-id="@item.Id" title="Pagos"><i class="fas fa-shopping-cart"></i> </a>
+                </div>
 
-                    <span class="lnr lnr-pencil"></span>
-                </a>
-                <a asp-action="details" asp-route-id="@item.Id" title="Detalles"><span class="lnr lnr-pushpin"></span></a>
-                <a asp-action="delete" asp-route-id="@item.Id" title="Eliminar"><span class="lnr lnr-cross"></span></a>
-            </td>
-            <td>
-                <a asp-action="Index" asp-controller="Pago" asp-route-id="@item.Id" title="Pagos"><span class="lnr lnr-cart"></span></a>
-                
+               
+
 
 
             </td>

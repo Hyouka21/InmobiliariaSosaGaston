@@ -7,7 +7,7 @@
     function editar(x){
 
         $("#editarModal").modal("show");
-        var clave = $('#' + x + '-clave')[0].innerText;
+        
         var nombre = $('#' + x + '-nombre')[0].innerText;
         var apellido = $('#' + x + '-apellido')[0].innerText;
         var dni = $('#' + x + '-dni')[0].innerText;
@@ -19,7 +19,7 @@
         $("#dni")[0].value = dni;
         $("#telefono")[0].value = telefono;
         $("#email")[0].value = email;
-        $("#clave")[0].value = clave;
+        
 
     }
 </script>
@@ -95,9 +95,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.email)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.clave)
-            </th>
+            
             <th></th>
         </tr>
     </thead>
@@ -123,19 +121,18 @@
                 <td id="@item.idPropietario-mail">
                     @Html.DisplayFor(modelItem => item.email)
                 </td>
-                <td id="@item.idPropietario-clave">
-                    @Html.DisplayFor(modelItem => item.clave)
-                </td>
+           
                 <td>
-                    <a href="javascript:editar(@item.idPropietario)" title="Editar">
+                    <div class="btn-group" role="group" aria-label="">
+                        <a class="btn btn-primary" href="javascript:editar(@item.idPropietario)" title="Editar">
 
-                        <span class="lnr lnr-pencil"></span>
-                    </a>
-                    <a asp-action="details" asp-route-id="@item.idPropietario" title="Detalles"><span class="lnr lnr-pushpin"></span></a>
-                    <a asp-action="delete" asp-route-id="@item.idPropietario" title="Eliminar"><span class="lnr lnr-cross"></span></a>
-                    <a asp-action="PorPropietario" asp-controller="Inmuebles" asp-route-id="@item.idPropietario" title="Mis Propiedades"><span class="lnr lnr-apartment"></span></a>
-                    
-                    
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a class="btn btn-primary" asp-action="details" asp-route-id="@item.idPropietario" title="Detalles"><i class="fas fa-info-circle"></i></a>
+                        <a class="btn btn-danger" asp-action="delete" asp-route-id="@item.idPropietario" title="Eliminar"><i class="fas fa-trash"></i></a>
+                        <a class="btn btn-primary" asp-action="Index" asp-controller="Inmueble" asp-route-id="@item.idPropietario" title="Mis Propiedades"><i class="far fa-building"></i> </a>
+                    </div>
+
 
                 </td>
             </tr>

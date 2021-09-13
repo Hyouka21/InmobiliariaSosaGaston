@@ -91,48 +91,45 @@
             <div class="container d-flex flex-column flex-md-row justify-content-between">
                 @if (!User.Identity.IsAuthenticated)
                 {
-                    <a class="py-2" asp-controller="Home" asp-action="Index"><span class="lnr lnr-home"></span> Inicio</a>
-                    <a class="py-2 d-none d-md-inline-block float-right" href="javascript:login()">
-                        <span class="lnr lnr-enter"></span> Acceder
+                    <a class="py-2 btn btn-primary  text-light" asp-controller="Home" asp-action="Index"><i class="fas fa-home"></i> Inicio</a>
+                    <a class="py-2 d-none d-md-inline-block float-right btn btn-primary  text-light" href="javascript:login()">
+                        <i class="fas fa-sign-in-alt"></i> Acceder
                     </a>
                 }
                 else
                 {
-                    <div class="dropdown">
-                        <a class="btn btn-primary dropdown-toggle text-light" href="#" role="button" id="homeMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent" data-display="static">
-                            <span class="lnr lnr-home"></span> Inicio
+                    
+                        <a class="btn btn-primary  text-light" asp-controller="Home" asp-action="Index"  >
+                            <i class="fas fa-home"></i> Inicio
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item text-dark" asp-controller="Home" asp-action="Index"><span class="lnr lnr-home"></span> Inicio</a>
-
-                        </div>
-                    </div>
+                       
+                    
                     @if (User.IsInRole("Administrador") || User.IsInRole("SuperAdministrador"))
                     {
 
-                        <a class="py-2 d-none d-md-inline-block" asp-controller="Usuario" asp-action="Index"><span class="lnr lnr-star"></span> Usuarios</a>}
+                        <a class="py-2 d-none d-md-inline-block btn btn-primary" asp-controller="Usuario" asp-action="Index"><i class="fas fa-users"></i> Usuarios</a>}
                     <div class="dropdown">
                         <a class="btn btn-primary dropdown-toggle text-light" href="#" role="button" id="personaMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent" data-display="static">
-                            <span class="lnr lnr-users"></span> Personas
+                            <i class="fas fa-users"></i> Personas
                         </a>
 
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item text-dark" asp-controller="Propietario" asp-action="Index"><span class="lnr lnr-user"></span> Propietarios</a>
-                            <a class="dropdown-item text-dark" asp-controller="Garante" asp-action="Index"><span class="lnr lnr-user"></span> Garantes</a>
-                            <a class="dropdown-item text-dark" asp-controller="Inquilino" asp-action="Index"><span class="lnr lnr-user"></span> Inquilinos</a>
+                            <a class="dropdown-item text-dark" asp-controller="Propietario" asp-action="Index"><i class="fas fa-user"></i> Propietarios</a>
+                            <a class="dropdown-item text-dark" asp-controller="Garante" asp-action="Index"><i class="fas fa-user"></i> Garantes</a>
+                            <a class="dropdown-item text-dark" asp-controller="Inquilino" asp-action="Index"><i class="fas fa-user"></i> Inquilinos</a>
                         </div>
                     </div>
 
-                    <a class="py-2 d-none d-md-inline-block" asp-controller="Inmueble" asp-action="Index"><span class="lnr lnr-apartment"></span> Inmuebles</a>
-                    <a class="py-2 d-none d-md-inline-block" asp-controller="Contrato" asp-action="Index"><span class="lnr lnr-enter"></span> Contratos</a>
+                    <a class="py-2 d-none d-md-inline-block btn btn-primary" asp-controller="Inmueble" asp-action="Index"><i class="far fa-building"></i> Inmuebles</a>
+                    <a class="py-2 d-none d-md-inline-block btn btn-primary" asp-controller="Contrato" asp-action="Index"><i class="fas fa-file-contract"></i> Contratos</a>
                     <div class="dropdown">
                         <a class="btn btn-primary dropdown-toggle text-light" href="#" role="button" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent" data-display="static">
-                            <span class="lnr lnr-user"></span> @User.Identity.Name
+                            <i class="fas fa-user"></i> @User.Identity.Name
                         </a>
 
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item text-dark"   href='javascript:datos("@User.Identity.Name.ToString()")' ><i class="lnr lnr-user"></i> Perfil</a>
-                            <a class="dropdown-item text-dark" asp-controller="Usuario" asp-action="Logout"><i class="lnr lnr-exit"></i> Salir</a>
+                            <a class="dropdown-item text-dark"   href='javascript:datos("@User.Identity.Name.ToString()")' ><i class="fas fa-users-cog"></i> Perfil</a>
+                            <a class="dropdown-item text-dark" asp-controller="Usuario" asp-action="Logout"><i class="fas fa-sign-out-alt"></i> Salir</a>
                         </div>
                     </div>}
             </div>

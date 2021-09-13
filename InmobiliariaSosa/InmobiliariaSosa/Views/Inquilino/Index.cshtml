@@ -117,13 +117,16 @@
                     @Html.DisplayFor(modelItem => item.email)
                 </td>
                 <td>
-                    
-                    <a href="javascript:editar(@item.idInquilino)" title="Editar">
+                    <div class="btn-group" role="group" aria-label="">
+                        <a class="btn btn-primary" href="javascript:editar(@item.idInquilino)" title="Editar">
 
-                        <span class="lnr lnr-pencil"></span>
-                    </a>
-                    <a asp-action="details" asp-route-id="@item.idInquilino" title="Detalles"><span class="lnr lnr-pushpin"></span></a>
-                    <a asp-action="delete" asp-route-id="@item.idInquilino" title="Eliminar"><span class="lnr lnr-cross"></span></a>
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a class="btn btn-primary" asp-action="details" asp-route-id="@item.idInquilino" title="Detalles"><i class="fas fa-info-circle"></i></a>
+                        <a class="btn btn-danger" asp-action="delete" asp-route-id="@item.idInquilino" title="Eliminar"><i class="fas fa-trash"></i></a>
+                        
+                    </div>
+                   
 
                 </td>
             </tr>

@@ -34,7 +34,11 @@ namespace InmobiliariaSosa.Controllers
             }
             else
             {
-                return View();
+
+                ViewBag.error = TempData["error"];
+                ViewBag.Propietarios = pdata.obtenerTodo();
+                var inmuebles = idata.obtenerXPropietario(id);
+                return View(inmuebles);
             }
         }
 
@@ -105,5 +109,6 @@ namespace InmobiliariaSosa.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
+      
     }
 }

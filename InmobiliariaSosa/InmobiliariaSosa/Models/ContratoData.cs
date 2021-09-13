@@ -206,5 +206,58 @@ namespace InmobiliariaSosa.Models
             return p;
         }
 
+        public IList<Contrato> obtenerXInmueble(int id)
+        {
+            IList<Contrato> lista = new List<Contrato>();
+            using (SqlConnection con = new SqlConnection(conectionString))
+            {
+                string sql = @"SELECT C.id,C.idInquilino,C.idInmueble,C.fechaDesde,C.fechaHasta,C.idGarante,inq.nombre,inq.apellido,I.direccion,G.nombre,G.apellido,C.precio,C.estado,C.fechaCancelado FROM Contrato AS C INNER JOIN Inmueble AS I ON I.id = C.idInmueble INNER JOIN Inquilino AS inq ON C.idInquilino = inq.idInquilino INNER JOIN Garante AS G ON C.idGarante = G.id WHERE C.idInmueble=@id;";
+                using (SqlCommand com = new SqlCommand(sql, con))
+                {
+                    com.CommandType = CommandType.Text;
+                    com.Parameters.AddWithValue("id", id);
+                    con.Open();
+                    var reader = com.ExecuteReader();
+                    if (reader != null)
+                    {
+                        while (reader.Read())
+                        {
+                            Contrato i = new Contrato
+                            {
+                                Id = reader.GetInt32(0),
+                                IdInquilino = reader.GetInt32(1),
+                                IdInmueble = reader.GetInt32(2),
+                                FechaDesde = reader.GetDateTime(3),
+                                FechaHasta = reader.GetDateTime(4),
+                                IdGarante = reader.GetInt32(5),
+                                Inquilino = new Inquilino
+                                {
+                                    idInquilino = reader.GetInt32(1),
+                                    nombre = reader.GetString(6),
+                                    apellido = reader.GetString(7)
+                                },
+                                Inmueble = new Inmueble
+                                {
+                                    Id = reader.GetInt32(2),
+                                    Direccion = reader.GetString(8)
+                                },
+                                Garante = new Garante
+                                {
+                                    Id = reader.GetInt32(5),
+                                    Nombre = reader.GetString(9),
+                                    Apellido = reader.GetString(10)
+                                },
+                                Precio = reader.GetDecimal(11),
+                                Estado = reader.GetByte(12),
+                                FechaCancelado = reader["fechaCancelado"] != DBNull.Value ? reader.GetDateTime(13) : null
+                            };
+                            lista.Add(i);
+                        }
+                    }
+                    con.Close();
+                }
+            }
+            return lista;
+        }
     }
 }

@@ -7,6 +7,6 @@ namespace InmobiliariaSosa.Models
      
     
         IList<Inmueble> obtenerInmuebles(string desde, string hasta, int id);
-     
+        IList<Inmueble> obtenerXPropietario(int id);
     }
 }

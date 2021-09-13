@@ -165,13 +165,14 @@
                 @(item.Estado==0?"Disponible":"No disponible")
             </td>
             <td>
-                <div class="btn-group" role="group" aria-label="Basic example">
+                <div class="btn-group" role="group" aria-label="">
                     <a class="btn btn-primary" href="javascript:editar(@item.Id)" title="Editar">
 
-                        <span class="lnr lnr-pencil"></span>
+                        <i class="fas fa-edit"></i>
                     </a>
-                    <a class="btn btn-primary" asp-action="details" asp-route-id="@item.Id" title="Detalles"><span class="lnr lnr-pushpin"></span></a>
+                    <a class="btn btn-primary" asp-action="details" asp-route-id="@item.Id" title="Detalles"><i class="fas fa-info-circle"></i></a>
                     <a class="btn btn-danger" asp-action="delete" asp-route-id="@item.Id" title="Eliminar"><i class="fas fa-trash"></i></a>
+                    <a class="btn btn-primary" asp-action="Index" asp-controller="Contrato" asp-route-id="@item.Id" title="Contratos"><i class="fas fa-file-contract"></i> </a>
                 </div>
 </td>
         </tr>

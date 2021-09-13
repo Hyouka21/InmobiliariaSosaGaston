@@ -208,7 +208,50 @@ namespace InmobiliariaSosa.Models
             throw new NotImplementedException();
         }
 
-     
+        public IList<Inmueble> obtenerXPropietario(int id)
+        {
+            IList<Inmueble> lista = new List<Inmueble>();
+            using (SqlConnection con = new SqlConnection(conectionString))
+            {
+                string sql = @"SELECT I.id,I.direccion,I.ambiente,I.superficie,I.latitud,I.longitud,I.idPropietario,P.nombre ,P.apellido,I.precio,I.estado 
+                        FROM Inmueble AS I INNER JOIN PROPIETARIO AS P ON I.idPropietario = P.idPropietario WHERE P.idPropietario=@id;";
+                using (SqlCommand com = new SqlCommand(sql, con))
+                {
+                    com.CommandType = CommandType.Text;
+                    com.Parameters.AddWithValue("@id", id);
+                    con.Open();
+                    
+                    var reader = com.ExecuteReader();
+                    if (reader != null)
+                    {
+                        while (reader.Read())
+                        {
+                            Inmueble i = new Inmueble
+                            {
+                                Id = reader.GetInt32(0),
+                                Direccion = reader.GetString(1),
+                                Ambiente = reader.GetInt32(2),
+                                Superficie = reader.GetInt32(3),
+                                Latitud = reader.GetDecimal(4),
+                                Longitud = reader.GetDecimal(5),
+                                IdPropietario = reader.GetInt32(6),
+                                Precio = reader.GetDecimal(9),
+                                Estado = reader.GetByte(10),
+                                Duenio = new Propietario
+                                {
+                                    idPropietario = reader.GetInt32(6),
+                                    nombre = reader.GetString(7),
+                                    apellido = reader.GetString(8)
+                                },
+                            };
+                            lista.Add(i);
+                        }
+                    }
+                    con.Close();
+                }
+            }
+            return lista;
+        }
     }
 }
 

@@ -27,14 +27,25 @@ namespace InmobiliariaSosa.Controllers
             gdata = garante;
         }
         // GET: ContratoController
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
-            ViewBag.error = TempData["error"];
-            ViewBag.Inquilinos = idata.obtenerTodo();
-            ViewBag.Inmuebles = inmdata.obtenerTodo();
-            ViewBag.Garantes = gdata.obtenerTodo();
-            var c = cdata.obtenerTodo();
-            return View(c);
+            if (id == 0)
+            {
+                ViewBag.error = TempData["error"];
+                ViewBag.Inquilinos = idata.obtenerTodo();
+                
+                ViewBag.Garantes = gdata.obtenerTodo();
+                var c = cdata.obtenerTodo();
+                return View(c);
+            }
+            else
+            {
+                ViewBag.error = TempData["error"];
+                ViewBag.Inquilinos = idata.obtenerTodo();
+                ViewBag.Garantes = gdata.obtenerTodo();
+                var c = cdata.obtenerXInmueble(id);
+                return View(c);
+            }
         }
         // GET: Propietario/Buscar/5
         [Route("[controller]/Buscar", Name = "Buscar")]

@@ -41,10 +41,10 @@
                 dataType: "json"
             }).done(res => {
                 $('#ocultoNew').css("display", "block");
-             
+
                 $.each(res, function (i, item) {
                     for (var val in item) {
-                     
+
                         $('#selectNew').append($('<option>', {
                             value: item[val].id,
                             text: item[val].direccion
@@ -87,9 +87,9 @@
     }
     function seguro() {
         var respuesta = confirm("Esta seguro de cancelar este pago? (recuerde que no podra revertirse este cambio)");
-        
+
         return respuesta;
-        
+
     }
     function editar(x){
 
@@ -120,11 +120,43 @@
     }
 </script>
 <h1>Contrato</h1>
-
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearModal">
-    Crear Contrato
-</button>
-
+<div class="btn-group" role="group" aria-label="">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearModal">
+        Crear Contrato
+    </button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal">
+        Filtro de Inmuebles
+    </button>
+</div>
+<div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="ModalLabel">Inmuebles por fecha</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Index" asp-controller="Inmueble">
+                    <div class="form-group">
+                        <label for="Desde" class="control-label">Fecha Ingreso</label>
+                        <input type="date" name="Desde" class="form-control"  />
+                        <span for="Desde" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Hasta" class="control-label">Fecha Salida</label>
+                        <input type="date" name="Hasta" class="form-control"  />
+                        <span for="Hasta" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Buscar" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="crearModal" tabindex="-1" aria-labelledby="crearModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -150,21 +182,20 @@
 
                     <div class="form-group">
                         <label for="FechaDesde" class="control-label">Fecha Ingreso</label>
-                        <input type="date" name="FechaDesde" class="form-control" id="desdeNew"/>
+                        <input type="date" name="FechaDesde" class="form-control" id="desdeNew" />
                         <span for="FechaDesde" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="FechaHasta" class="control-label">Fecha Salida</label>
-                        <input type="date" name="FechaHasta" class="form-control" id="hastaNew"/>
+                        <input type="date" name="FechaHasta" class="form-control" id="hastaNew" />
                         <span for="FechaHasta" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <input type="button" value="Buscar" class="btn btn-primary" onclick="buscar(0);"/>
+                        <input type="button" value="Buscar" class="btn btn-primary" onclick="buscar(0);" />
                     </div>
                     <div class="form-group" id="ocultoNew" style="display: none;">
                         <label class="control-label">Inmueble</label>
                         <select class="form-control" id="selectNew" name="IdInmueble">
-                            
                         </select>
                         <span for="IdInmueble" class="text-danger"></span>
                     </div>
@@ -179,7 +210,7 @@
                         <span for="IdGarante" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label for="Precio" class="control-label" >Precio</label>
+                        <label for="Precio" class="control-label">Precio</label>
                         <input name="Precio" class="form-control" />
                         <span for="Precio" class="text-danger"></span>
                     </div>
@@ -218,66 +249,66 @@
             <th>
                 @Html.DisplayNameFor(model => model.Estado)
             </th>
-            
-           
+
+
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td id="@item.Id-Id">
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                <input type="hidden" value="@item.IdInquilino" id="@item.Id-IdInquilino" />
-                @item.Inquilino.nombre @item.Inquilino.apellido
-            </td>
-            <td>
-                <input type="hidden" value="@item.IdInmueble" id="@item.Id-IdInmueble" />
-                @item.Inmueble.Direccion
-            </td>
-            <td id="@item.Id-FechaDesde">
-                @item.FechaDesde.Date.ToString("yyyy-MM-dd")
-            </td>
-            <td id="@item.Id-FechaHasta">
-                @item.FechaHasta.Date.ToString("yyyy-MM-dd")
-            </td>
-            <td>
-                <input type="hidden" value="@item.IdGarante" id="@item.Id-IdGarante" />
-                @item.Garante.Nombre @item.Garante.Apellido
-            </td>
-            <td id="@item.Id-Precio">
-                @Html.DisplayFor(modelItem => item.Precio)
-            </td>
-            <td id="@item.Id-Estado">
+            <tr>
+                <td id="@item.Id-Id">
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    <input type="hidden" value="@item.IdInquilino" id="@item.Id-IdInquilino" />
+                    @item.Inquilino.nombre @item.Inquilino.apellido
+                </td>
+                <td>
+                    <input type="hidden" value="@item.IdInmueble" id="@item.Id-IdInmueble" />
+                    @item.Inmueble.Direccion
+                </td>
+                <td id="@item.Id-FechaDesde">
+                    @item.FechaDesde.Date.ToString("yyyy-MM-dd")
+                </td>
+                <td id="@item.Id-FechaHasta">
+                    @item.FechaHasta.Date.ToString("yyyy-MM-dd")
+                </td>
+                <td>
+                    <input type="hidden" value="@item.IdGarante" id="@item.Id-IdGarante" />
+                    @item.Garante.Nombre @item.Garante.Apellido
+                </td>
+                <td id="@item.Id-Precio">
+                    @Html.DisplayFor(modelItem => item.Precio)
+                </td>
+                <td id="@item.Id-Estado">
 
-                <form asp-action="Edit">
-                    <input type= "hidden" name="Id" value='@item.Id'  />
-                    <input type="hidden" name="Estado" value='1' />
-                    <input type=@(item.Estado == 0 ? "submit" : "hidden") value='Cancelar' class='btn btn-primary' onclick='return seguro();' />
-                </form>
-                
-                <input type=@(item.Estado == 1 ? "button" : "hidden") value='Informe' class='btn btn-primary' onclick='calcular("@item.Id", "@item.Precio", "@item.FechaCancelado")' />
-            </td>
+                    <form asp-action="Edit">
+                        <input type="hidden" name="Id" value='@item.Id' />
+                        <input type="hidden" name="Estado" value='1' />
+                        <input type=@(item.Estado == 0 ? "submit" : "hidden") value='Cancelar' class='btn btn-primary' onclick='return seguro();' />
+                    </form>
 
-            <td>
-                <div class="btn-group" role="group" aria-label="">
-                    <a class="btn btn-primary" href="javascript:editar(@item.Id)" title="Editar">
+                    <input type=@(item.Estado == 1 ? "button" : "hidden") value='Informe' class='btn btn-primary' onclick='calcular("@item.Id", "@item.Precio", "@item.FechaCancelado")' />
+                </td>
 
-                        <i class="fas fa-edit"></i>
-                    </a>
-                    <a class="btn btn-primary" asp-action="details" asp-route-id="@item.Id" title="Detalles"><i class="fas fa-info-circle"></i></a>
-                    <a class="btn btn-danger" asp-action="delete" asp-route-id="@item.Id" title="Eliminar"><i class="fas fa-trash"></i></a>
-                    <a class="btn btn-primary" asp-action="Index" asp-controller="Pago" asp-route-id="@item.Id" title="Pagos"><i class="fas fa-shopping-cart"></i> </a>
-                </div>
+                <td>
+                    <div class="btn-group" role="group" aria-label="">
+                        <a class="btn btn-primary" href="javascript:editar(@item.Id)" title="Editar">
 
-               
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a class="btn btn-primary" asp-action="details" asp-route-id="@item.Id" title="Detalles"><i class="fas fa-info-circle"></i></a>
+                        <a class="btn btn-danger" asp-action="delete" asp-route-id="@item.Id" title="Eliminar"><i class="fas fa-trash"></i></a>
+                        <a class="btn btn-primary" asp-action="Index" asp-controller="Pago" asp-route-id="@item.Id" title="Pagos"><i class="fas fa-shopping-cart"></i> </a>
+                    </div>
 
 
 
-            </td>
-        </tr>
+
+
+                </td>
+            </tr>
         }
     </tbody>
 </table>

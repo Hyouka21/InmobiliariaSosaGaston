@@ -47,16 +47,13 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.email)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.clave)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.clave)
-        </dd>
+       
     </dl>
     
     <form asp-action="Delete">
-        <input type="submit" value="Borrar" class="btn btn-danger" /> |
-        <a asp-action="Index">Volver a inicio</a>
+        <div class="btn-group" role="group" aria-label="">
+            <input type="submit" value="Borrar" class="btn btn-danger">
+            <a class="btn btn-primary" asp-action="Index"><i class="fas fa-backward"></i> Volver</a>
+        </div>
     </form>
 </div>

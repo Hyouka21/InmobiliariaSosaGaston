@@ -68,7 +68,9 @@
     </dl>
     
     <form asp-action="Delete">
-        <input type="submit" value="Borrar" class="btn btn-danger" /> |
-        <a asp-action="Index">Volver a Inmuebles</a>
+        <div class="btn-group" role="group" aria-label="">
+            <input type="submit" value="Borrar" class="btn btn-danger">
+            <a class="btn btn-primary" asp-action="Index"><i class="fas fa-backward"></i> Volver</a>
+        </div>
     </form>
 </div>

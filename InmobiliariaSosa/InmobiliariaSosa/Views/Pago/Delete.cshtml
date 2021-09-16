@@ -50,8 +50,9 @@
     </dl>
     
     <form asp-action="Delete">
-        
-        <input type="submit" value="Borrar" class="btn btn-danger" /> |
-        @Html.ActionLink("Volver a pagos", "Index", new { id = Model.ContratoId })
+        <div class="btn-group" role="group" aria-label="">
+            <input type="submit" value="Borrar" class="btn btn-danger">
+            <a class="btn btn-primary" asp-action="Index" asp-route-id="@Model.ContratoId"><i class="fas fa-backward"></i> Volver</a>
+        </div>
     </form>
 </div>

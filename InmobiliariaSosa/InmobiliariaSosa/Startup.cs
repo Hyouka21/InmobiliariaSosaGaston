@@ -41,6 +41,7 @@ namespace InmobiliariaSosa
                 options.AddPolicy("Empleado", policy => policy.RequireClaim(ClaimTypes.Role, "Administrador", "Empleado"));
                 options.AddPolicy("Administrador", policy => policy.RequireRole("Administrador", "SuperAdministrador"));
                 });
+            //injeccion de dependencia
             services.AddTransient<IPropietarioData, PropietarioData>();
             services.AddTransient<IInquilinoData, InquilinoData>();
             services.AddTransient<IUsuarioData, UsuarioData>();
@@ -79,6 +80,7 @@ namespace InmobiliariaSosa
 
             app.UseEndpoints(endpoints =>
             {
+         
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

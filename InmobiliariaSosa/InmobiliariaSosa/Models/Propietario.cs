@@ -11,15 +11,19 @@ namespace InmobiliariaSosa.Models
 		[Display(Name = "Código")]
 		public int idPropietario { get; set; }
 		[Required]
+		[Display(Name = "Nombre")]
 		public string nombre { get; set; }
 		[Required]
+		[Display(Name = "Apellido")]
 		public string apellido { get; set; }
 		[Required]
+		[Display(Name = "Dni")]
 		public string dni { get; set; }
 		[Required]
+		[Display(Name = "Teléfono")]
 		public string telefono { get; set; }
 		[Required]
-
+		[Display(Name = "Email")]
 		public string email { get; set; }
 		[Required]
 

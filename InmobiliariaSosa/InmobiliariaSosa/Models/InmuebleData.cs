@@ -167,10 +167,11 @@ namespace InmobiliariaSosa.Models
             IList<Inmueble> lista = new List<Inmueble>();
             using (SqlConnection con = new SqlConnection(conectionString))
             {
-                string sql = @"SELECT i.id, i.direccion FROM Inmueble i left join 
+                string sql = @" SELECT i.id,i.direccion,i.ambiente,i.superficie,i.latitud,i.longitud,i.idPropietario,P.nombre ,P.apellido,i.precio,i.estado 
+                From(SELECT * FROM Inmueble i left join 
                 (SELECT  idInmueble FROM Contrato c WHERE ((c.fechaDesde between @desde  and @hasta) 
                 or (c.fechaHasta between @desde and @hasta)) and c.idInmueble != @id) x on (i.id = x.idInmueble)
-                where x.idInmueble is null and i.estado = 0;";
+                where x.idInmueble is null and i.estado = 0) i  INNER JOIN Propietario P ON i.idPropietario = P.idPropietario;";
                 using (SqlCommand com = new SqlCommand(sql, con))
                 {
                     com.CommandType = CommandType.Text;
@@ -187,7 +188,19 @@ namespace InmobiliariaSosa.Models
                             {
                                 Id = reader.GetInt32(0),
                                 Direccion = reader.GetString(1),
-
+                                Ambiente = reader.GetInt32(2),
+                                Superficie = reader.GetInt32(3),
+                                Latitud = reader.GetDecimal(4),
+                                Longitud = reader.GetDecimal(5),
+                                IdPropietario = reader.GetInt32(6),
+                                Precio = reader.GetDecimal(9),
+                                Estado = reader.GetByte(10),
+                                Duenio = new Propietario
+                                {
+                                    idPropietario = reader.GetInt32(6),
+                                    nombre = reader.GetString(7),
+                                    apellido = reader.GetString(8)
+                                },
                             };
                             lista.Add(i);
                         }
@@ -221,6 +234,49 @@ namespace InmobiliariaSosa.Models
                     com.Parameters.AddWithValue("@id", id);
                     con.Open();
                     
+                    var reader = com.ExecuteReader();
+                    if (reader != null)
+                    {
+                        while (reader.Read())
+                        {
+                            Inmueble i = new Inmueble
+                            {
+                                Id = reader.GetInt32(0),
+                                Direccion = reader.GetString(1),
+                                Ambiente = reader.GetInt32(2),
+                                Superficie = reader.GetInt32(3),
+                                Latitud = reader.GetDecimal(4),
+                                Longitud = reader.GetDecimal(5),
+                                IdPropietario = reader.GetInt32(6),
+                                Precio = reader.GetDecimal(9),
+                                Estado = reader.GetByte(10),
+                                Duenio = new Propietario
+                                {
+                                    idPropietario = reader.GetInt32(6),
+                                    nombre = reader.GetString(7),
+                                    apellido = reader.GetString(8)
+                                },
+                            };
+                            lista.Add(i);
+                        }
+                    }
+                    con.Close();
+                }
+            }
+            return lista;
+        }
+
+        public IList<Inmueble> obtenerInmueblesDisponibles()
+        {
+            IList<Inmueble> lista = new List<Inmueble>();
+            using (SqlConnection con = new SqlConnection(conectionString))
+            {
+                string sql = @"SELECT I.id,I.direccion,I.ambiente,I.superficie,I.latitud,I.longitud,I.idPropietario,P.nombre ,P.apellido,I.precio,I.estado 
+                    FROM Inmueble AS I INNER JOIN PROPIETARIO AS P ON I.idPropietario = P.idPropietario WHERE I.estado=0;";
+                using (SqlCommand com = new SqlCommand(sql, con))
+                {
+                    com.CommandType = CommandType.Text;
+                    con.Open();
                     var reader = com.ExecuteReader();
                     if (reader != null)
                     {

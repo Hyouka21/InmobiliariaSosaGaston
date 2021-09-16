@@ -22,23 +22,39 @@ namespace InmobiliariaSosa.Controllers
             idata = inm;
             pdata = pro;
         }
-        public ActionResult Index(int id)
+        public ActionResult Index(int id, BusquedaInmueble busInm)
         {
             ViewBag.Roles = Usuario.ObtenerRoles();
-            if (id == 0)
+            ViewBag.Propietarios = pdata.obtenerTodo();
+            ViewBag.error = TempData["error"];
+            if (busInm.Desde==null)
             {
-                ViewBag.error = TempData["error"];
-                ViewBag.Propietarios = pdata.obtenerTodo();
-                var inmuebles = idata.obtenerTodo();
-                return View(inmuebles);
+                if (id == 0)
+                {
+                    
+                    
+                    var inmuebles = idata.obtenerTodo();
+                    return View(inmuebles);
+                }
+                else if (id > 0)
+                {
+
+          
+                    
+                    var inmuebles = idata.obtenerXPropietario(id);
+                    return View(inmuebles);
+                }
+                else
+                {
+                  
+                    var inmuebles = idata.obtenerInmueblesDisponibles();
+                    return View(inmuebles);
+                }
             }
             else
             {
-
-                ViewBag.error = TempData["error"];
-                ViewBag.Propietarios = pdata.obtenerTodo();
-                var inmuebles = idata.obtenerXPropietario(id);
-                return View(inmuebles);
+                var i = idata.obtenerInmuebles(busInm.Desde, busInm.Hasta, 0);               
+                return View(i);
             }
         }
 
@@ -109,6 +125,13 @@ namespace InmobiliariaSosa.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
-      
+        public ActionResult Fecha(BusquedaInmueble busInm)
+        {
+            var i = idata.obtenerInmuebles(busInm.Desde,busInm.Hasta,0);
+            TempData["inmu"] = i;
+                return RedirectToAction(nameof(Index));
+        }
+
+
     }
 }

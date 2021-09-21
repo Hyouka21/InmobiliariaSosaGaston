@@ -4,7 +4,7 @@
     ViewData["Title"] = "Garante";
 }
 <script type="text/javascript" onl>
-    function editar(x){
+    function editar(x) {
 
         $("#editarModal").modal("show");
 
@@ -71,7 +71,7 @@
     </div>
 </div>
 
-<table class="table">
+<table class="table" id="tabla">
     <thead>
         <tr>
             <th>
@@ -125,10 +125,10 @@
                         </a>
                         <a class="btn btn-primary" asp-action="details" asp-route-id="@item.Id" title="Detalles"><i class="fas fa-info-circle"></i></a>
                         <a class="btn btn-danger" asp-action="delete" asp-route-id="@item.Id" title="Eliminar"><i class="fas fa-trash"></i></a>
-                      
+
                     </div>
 
-                  
+
                 </td>
             </tr>
         }
@@ -176,3 +176,7 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_DataTable");}
+
+}

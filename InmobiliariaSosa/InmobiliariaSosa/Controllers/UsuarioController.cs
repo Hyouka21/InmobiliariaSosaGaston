@@ -197,7 +197,7 @@ namespace InmobiliariaSosa.Controllers
                 return View();
             }
         }
-        [AllowAnonymous]
+        [Authorize]
         public async Task<ActionResult> Logout()
         {
             await HttpContext.SignOutAsync(
@@ -221,7 +221,7 @@ namespace InmobiliariaSosa.Controllers
                 {
                    
                     TempData["error"] = "El email o la clave no son correctos";
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(Index), "Home");
                 }
 
                 var claims = new List<Claim>
@@ -254,9 +254,10 @@ namespace InmobiliariaSosa.Controllers
                 return RedirectToAction(nameof(Index),"Home");
             }
         }
-        [AllowAnonymous]
+        [Authorize]
         public IActionResult Perfil(Usuario u, String UrlReturn)
         {
+            string url = Request.Headers["referer"].FirstOrDefault();
             Usuario usuViejo = uData.ObtenerPorId(u.Id);
             u.Rol = usuViejo.Rol;
             if (u.Clave == null || u.ClaveNueva == null)
@@ -285,7 +286,14 @@ namespace InmobiliariaSosa.Controllers
                 else
                 {
                     TempData["error"] = "La contraseña ingresada es incorrecta";
-                    return RedirectToAction(nameof(Index));
+                    if (string.IsNullOrEmpty(url))
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        return Redirect(url);
+                    }
                 }
                
 
@@ -320,9 +328,18 @@ namespace InmobiliariaSosa.Controllers
                 u.Avatar = usuViejo.Avatar;
                 uData.Modificacion(u);
             }
-            return RedirectToAction(nameof(Index));
+
+            if (string.IsNullOrEmpty(url))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return Redirect(url);
+            }
+
         }
-        [AllowAnonymous]
+        [Authorize]
         [Route("[controller]/Datos", Name = "Datos")]
         public IActionResult Datos(IFormCollection correo)
         {

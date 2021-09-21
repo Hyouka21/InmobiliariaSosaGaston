@@ -27,23 +27,30 @@ namespace InmobiliariaSosa.Controllers
             gdata = garante;
         }
         // GET: ContratoController
-        public ActionResult Index(int id)
+        public ActionResult Index(int id, BusquedaInmueble busInm)
         {
-            if (id == 0)
+            ViewBag.error = TempData["error"];
+            ViewBag.Inquilinos = idata.obtenerTodo();
+
+            ViewBag.Garantes = gdata.obtenerTodo();
+            if (busInm.Desde == null)
             {
-                ViewBag.error = TempData["error"];
-                ViewBag.Inquilinos = idata.obtenerTodo();
-                
-                ViewBag.Garantes = gdata.obtenerTodo();
-                var c = cdata.obtenerTodo();
-                return View(c);
+                if (id == 0)
+                {
+                    
+                    var c = cdata.obtenerTodo();
+                    return View(c);
+                }
+                else
+                {
+                    
+                    var c = cdata.obtenerXInmueble(id);
+                    return View(c);
+                }
             }
             else
             {
-                ViewBag.error = TempData["error"];
-                ViewBag.Inquilinos = idata.obtenerTodo();
-                ViewBag.Garantes = gdata.obtenerTodo();
-                var c = cdata.obtenerXInmueble(id);
+                var c = cdata.obtenerXFecha(busInm.Desde, busInm.Hasta);
                 return View(c);
             }
         }
@@ -134,7 +141,7 @@ namespace InmobiliariaSosa.Controllers
             }
             catch (Exception ex)
             {
-                TempData["error"] = ex.Message;
+                TempData["error"] = "El contrato no puede ser eliminado por que tiene pagos";
                 return RedirectToAction(nameof(Index));
             }
         }

@@ -211,15 +211,7 @@ namespace InmobiliariaSosa.Models
             return lista;
         }
 
-        public int alta(Inquilino i)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int Modificacion(Inquilino e)
-        {
-            throw new NotImplementedException();
-        }
+    
 
         public IList<Inmueble> obtenerXPropietario(int id)
         {

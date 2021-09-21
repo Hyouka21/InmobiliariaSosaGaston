@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
     <link rel="icon" href="~/img/favicon.png" type="image/x-icon" />
+   
     <script type="text/javascript" onl>
 
         function login() {
@@ -85,7 +86,7 @@
 </head>
 <body class="bg-gradient-light">
     <header>
-     
+
         <nav class="site-header py-1">
             <!-- sticky-top -->
             <div class="container d-flex flex-column flex-md-row justify-content-between">
@@ -98,12 +99,12 @@
                 }
                 else
                 {
-                    
-                        <a class="btn btn-primary  text-light" asp-controller="Home" asp-action="Index"  >
-                            <i class="fas fa-home"></i> Inicio
-                        </a>
-                       
-                    
+
+                    <a class="btn btn-primary  text-light" asp-controller="Home" asp-action="Index">
+                        <i class="fas fa-home"></i> Inicio
+                    </a>
+
+
                     @if (User.IsInRole("Administrador") || User.IsInRole("SuperAdministrador"))
                     {
 
@@ -121,14 +122,14 @@
                     </div>
 
                     <a class="py-2 d-none d-md-inline-block btn btn-primary" asp-controller="Inmueble" asp-action="Index" asp-route-id="0"><i class="far fa-building"></i> Inmuebles</a>
-                    <a class="py-2 d-none d-md-inline-block btn btn-primary" asp-controller="Contrato" asp-action="Index"><i class="fas fa-file-contract"></i> Contratos</a>
+                    <a class="py-2 d-none d-md-inline-block btn btn-primary" asp-controller="Contrato" asp-action="Index" asp-route-id="0"><i class="fas fa-file-contract"></i> Contratos</a>
                     <div class="dropdown">
                         <a class="btn btn-primary dropdown-toggle text-light" href="#" role="button" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent" data-display="static">
                             <i class="fas fa-user"></i> @User.Identity.Name
                         </a>
 
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            <a class="dropdown-item text-dark"   href='javascript:datos("@User.Identity.Name.ToString()")' ><i class="fas fa-users-cog"></i> Perfil</a>
+                            <a class="dropdown-item text-dark" href='javascript:datos("@User.Identity.Name.ToString()")'><i class="fas fa-users-cog"></i> Perfil</a>
                             <a class="dropdown-item text-dark" asp-controller="Usuario" asp-action="Logout"><i class="fas fa-sign-out-alt"></i> Salir</a>
                         </div>
                     </div>}
@@ -202,8 +203,8 @@
                                 <span for="Clave" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <img width="32" src="" id="imgPerfil"/>
-                                
+                                <img width="32" src="" id="imgPerfil" />
+
                             </div>
                             <div class="form-group">
                                 <label for="AvatarFile" class="control-label">Foto de perfil</label>
@@ -246,9 +247,20 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+    
+    <script src="https://unpkg.com/dayjs@1.8.21/plugin/customParseFormat.js">
+
+    </script>
+    <script>
+        dayjs.extend(window.dayjs_plugin_customParseFormat);
+    </script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="//momentjs.com/downloads/moment.min.js"></script>
     <script src="https://kit.fontawesome.com/6894de73e8.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.2/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.2/js/jquery.dataTables.js">
+
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

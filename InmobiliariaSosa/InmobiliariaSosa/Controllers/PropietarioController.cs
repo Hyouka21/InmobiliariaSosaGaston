@@ -70,7 +70,14 @@ namespace InmobiliariaSosa.Controllers
                 mod.apellido = p.apellido;
                 mod.dni = p.dni;
                 mod.email = p.email;
-                mod.clave = p.clave;
+                if (String.IsNullOrEmpty(p.clave))
+                {
+
+                }
+                else
+                {
+                    mod.clave = p.clave;
+                }
                 pd.Modificacion(mod);
                 return RedirectToAction(nameof(Index));
             }

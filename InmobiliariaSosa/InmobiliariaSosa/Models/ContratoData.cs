@@ -113,7 +113,7 @@ namespace InmobiliariaSosa.Models
                 if (e.Estado == 0)
                 {
                     string sql = $"UPDATE Contrato SET " +
-                        $"idInquilino=@idInquilino, idInmueble=@idInmueble, fechaDesde=@fechaDesde, fechaHasta=@fechaHasta, idGarante=@idGarante, precio=@precio" +
+                        $"idInquilino=@idInquilino, idInmueble=@idInmueble, fechaDesde=@fechaDesde, fechaHasta=@fechaHasta, idGarante=@idGarante, precio=@precio " +
                         $"WHERE id = @id";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -135,13 +135,19 @@ namespace InmobiliariaSosa.Models
                 else
                 {
                     string sql = $"UPDATE Contrato SET " +
-                        $"estado=@estado, fechaCancelado=@fechaCancelado " +
-                        $"WHERE id = @id";
+                       $"estado = @estado, fechaCancelado = @fechaCancelado,idInquilino = @idInquilino, idInmueble=@idInmueble, fechaDesde=@fechaDesde, fechaHasta=@fechaHasta, idGarante=@idGarante, precio=@precio " +
+                       $"WHERE id = @id";
+                   
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         var fecha = DateTime.Now;
                         command.CommandType = CommandType.Text;
-
+                        command.Parameters.AddWithValue("@idInquilino", e.IdInquilino);
+                        command.Parameters.AddWithValue("@idInmueble", e.IdInmueble);
+                        command.Parameters.AddWithValue("@fechaDesde", e.FechaDesde);
+                        command.Parameters.AddWithValue("@fechaHasta", e.FechaHasta);
+                        command.Parameters.AddWithValue("@idGarante", e.IdGarante);
+                        command.Parameters.AddWithValue("@precio", e.Precio);
                         command.Parameters.AddWithValue("@estado", e.Estado);
                         command.Parameters.AddWithValue("@fechaCancelado", fecha);
 
@@ -259,5 +265,64 @@ namespace InmobiliariaSosa.Models
             }
             return lista;
         }
+        //(SELECT * FROM Contrato c WHERE ((c.fechaDesde between @desde  and @hasta) or(c.fechaHasta between @desde and @hasta)))
+        public IList<Contrato> obtenerXFecha(string desde, string hasta)
+        {
+            IList<Contrato> lista = new List<Contrato>();
+            using (SqlConnection con = new SqlConnection(conectionString))
+            {
+                string sql = @"SELECT C.id,C.idInquilino,C.idInmueble,C.fechaDesde,C.fechaHasta,C.idGarante,inq.nombre,inq.apellido,I.direccion,G.nombre,G.apellido,C.precio,C.estado,C.fechaCancelado
+    FROM (SELECT * FROM Contrato c WHERE ((c.fechaDesde between @desde  and @hasta) or(c.fechaHasta between @desde and @hasta)) and c.estado=0) AS C 
+    INNER JOIN Inmueble AS I ON I.id = C.idInmueble INNER JOIN Inquilino AS inq ON C.idInquilino = inq.idInquilino INNER JOIN Garante AS G ON C.idGarante = G.id;";
+                using (SqlCommand com = new SqlCommand(sql, con))
+                {
+                    com.CommandType = CommandType.Text;
+                    com.Parameters.AddWithValue("@desde", desde);
+                    com.Parameters.AddWithValue("@hasta", hasta);
+                    con.Open();
+                    var reader = com.ExecuteReader();
+                    if (reader != null)
+                    {
+                        while (reader.Read())
+                        {
+                            Contrato i = new Contrato
+                            {
+                                Id = reader.GetInt32(0),
+                                IdInquilino = reader.GetInt32(1),
+                                IdInmueble = reader.GetInt32(2),
+                                FechaDesde = reader.GetDateTime(3),
+                                FechaHasta = reader.GetDateTime(4),
+                                IdGarante = reader.GetInt32(5),
+                                Inquilino = new Inquilino
+                                {
+                                    idInquilino = reader.GetInt32(1),
+                                    nombre = reader.GetString(6),
+                                    apellido = reader.GetString(7)
+                                },
+                                Inmueble = new Inmueble
+                                {
+                                    Id = reader.GetInt32(2),
+                                    Direccion = reader.GetString(8)
+                                },
+                                Garante = new Garante
+                                {
+                                    Id = reader.GetInt32(5),
+                                    Nombre = reader.GetString(9),
+                                    Apellido = reader.GetString(10)
+                                },
+                                Precio = reader.GetDecimal(11),
+                                Estado = reader.GetByte(12),
+                                FechaCancelado = reader["fechaCancelado"] != DBNull.Value ? reader.GetDateTime(13) : null
+                            };
+                            lista.Add(i);
+                        }
+                    }
+                    con.Close();
+                }
+            }
+            return lista;
+        }
+
     }
+    
 }

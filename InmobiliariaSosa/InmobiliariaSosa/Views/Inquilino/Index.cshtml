@@ -3,11 +3,11 @@
 @{
     ViewData["Title"] = "Inquilino";
 }
-<script type="text/javascript" onl >
-    function editar(x){
-        
+<script type="text/javascript" onl>
+    function editar(x) {
+
         $("#editarModal").modal("show");
-        
+
         var nombre = $('#' + x + '-nombre')[0].innerText;
         var apellido = $('#' + x + '-apellido')[0].innerText;
         var dni = $('#' + x + '-dni')[0].innerText;
@@ -18,7 +18,7 @@
         $("#apellido")[0].value = apellido;
         $("#dni")[0].value = dni;
         $("#telefono")[0].value = telefono;
-        $("#email")[0].value = email;       
+        $("#email")[0].value = email;
 
     }
 </script>
@@ -37,40 +37,40 @@
                 </button>
             </div>
             <div class="modal-body">
-                        <form asp-action="Create">
-                            <div class="text-danger"></div>
-                            <div class="form-group">
-                                <label for="nombre" class="control-label">Nombre</label>
-                                <input type="text" name="nombre" class="form-control" />
+                <form asp-action="Create">
+                    <div class="text-danger"></div>
+                    <div class="form-group">
+                        <label for="nombre" class="control-label">Nombre</label>
+                        <input type="text" name="nombre" class="form-control" />
 
-                            </div>
-                            <div class="form-group">
-                                <label for="apellido" class="control-label">apellido</label>
-                                <input type="text" name="apellido" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <label for="dni" class="control-label">dni</label>
-                                <input type="text" name="dni" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <label for="telefono" class="control-label">telefono</label>
-                                <input type="tel"name="telefono" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <label for="email" class="control-label">email</label>
-                                <input type="email" name="email" class="form-control" />
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" value="Crear" class="btn btn-primary" />
-                            </div>
-                        </form>
+                    </div>
+                    <div class="form-group">
+                        <label for="apellido" class="control-label">apellido</label>
+                        <input type="text" name="apellido" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="dni" class="control-label">dni</label>
+                        <input type="text" name="dni" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono" class="control-label">telefono</label>
+                        <input type="tel" name="telefono" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="control-label">email</label>
+                        <input type="email" name="email" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Crear" class="btn btn-primary" />
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
 
-<table class="table">
+<table class="table" id="tabla">
     <thead>
         <tr>
             <th>
@@ -124,16 +124,16 @@
                         </a>
                         <a class="btn btn-primary" asp-action="details" asp-route-id="@item.idInquilino" title="Detalles"><i class="fas fa-info-circle"></i></a>
                         <a class="btn btn-danger" asp-action="delete" asp-route-id="@item.idInquilino" title="Eliminar"><i class="fas fa-trash"></i></a>
-                        
+
                     </div>
-                   
+
 
                 </td>
             </tr>
 
 
         }
-    
+
     </tbody>
 </table>
 <div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="editarModalLabel" aria-hidden="true">
@@ -147,7 +147,7 @@
             </div>
             <div class="modal-body">
                 <form asp-action="Edit">
-                    <input type="hidden"  id="idInquilino" name="idInquilino" value="" />
+                    <input type="hidden" id="idInquilino" name="idInquilino" value="" />
                     <div class="text-danger"></div>
                     <div class="form-group">
                         <label for="nombre" class="control-label">Nombre</label>
@@ -160,7 +160,7 @@
                     </div>
                     <div class="form-group">
                         <label for="dni" class="control-label">Dni</label>
-                        <input type="text" id="dni"  name="dni" class="form-control" value="" />
+                        <input type="text" id="dni" name="dni" class="form-control" value="" />
                     </div>
                     <div class="form-group">
                         <label for="telefono" class="control-label">Telefono</label>
@@ -178,4 +178,8 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_DataTable");}
+
+}
 

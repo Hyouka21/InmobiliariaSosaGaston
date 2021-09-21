@@ -10,8 +10,7 @@
         var hoy = moment(fec);
         var fecha1 = moment(fechadesde);
         var fecha2 = moment(fechahasta);
-        console.log(hoy);
-        console.log(fecha1);
+        
         var difhoy = hoy.diff(fecha1, 'days');
         var dif = fecha2.diff(fecha1, 'days');
         var mitad = dif / 2;
@@ -101,12 +100,15 @@
         var fechahasta = $('#' + x + '-FechaHasta')[0].innerText;
         var garante = $('#' + x + '-IdGarante')[0].value;
         var precio = $('#' + x + '-Precio')[0].innerText;
-        var estado = $('#' + x + '-Estado')[0].innerText == "Disponible" ? 0 : 1;
+        var estado = $("#EstadoV")[0].value;
+        var fechaD = dayjs(fechadesde, "DD-MM-YYYY");
+        var fechaH = dayjs(fechahasta, "DD-MM-YYYY");
+        
         $("#Id")[0].value = x;
-        $("#FechaDesde")[0].value = fechadesde;
-        $("#FechaHasta")[0].value = fechahasta;
+        $("#FechaDesde")[0].value = fechaD.format("YYYY-MM-DD");
+        $("#FechaHasta")[0].value = fechaH.format("YYYY-MM-DD");
         $("#precioEdit")[0].value = precio;
-
+        $("#EstadoE")[0].value = estado;
         $("#btnEdit").attr('onclick', `buscar(${inmueble});`);
         $("#IdInquilino option:selected").removeAttr("selected");
         $("#IdInquilino option[value=" + inquilino + "]").attr("selected", true);
@@ -114,8 +116,7 @@
         $("#IdInmueble option[value=" + inmueble + "]").attr("selected", true);
         $("#IdGarante option:selected").removeAttr("selected");
         $("#IdGarante option[value=" + garante + "]").attr("selected", true);
-        $("#Estado option:selected").removeAttr("selected");
-        $("#Estado option[value=" + estado + "]").attr("selected", true);
+       
 
     }
 </script>
@@ -126,6 +127,9 @@
     </button>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Modal">
         Filtro de Inmuebles
+    </button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#VigenteModal">
+        Contratos Vigentes
     </button>
 </div>
 <div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
@@ -141,12 +145,41 @@
                 <form asp-action="Index" asp-controller="Inmueble">
                     <div class="form-group">
                         <label for="Desde" class="control-label">Fecha Ingreso</label>
-                        <input type="date" name="Desde" class="form-control"  />
+                        <input type="date" name="Desde" class="form-control" />
                         <span for="Desde" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label for="Hasta" class="control-label">Fecha Salida</label>
-                        <input type="date" name="Hasta" class="form-control"  />
+                        <input type="date" name="Hasta" class="form-control" />
+                        <span for="Hasta" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Buscar" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="VigenteModal" tabindex="-1" aria-labelledby="VModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="VModalLabel">Contratos vigentes por fechas</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Index" asp-controller="Contrato">
+                    <div class="form-group">
+                        <label for="Desde" class="control-label">Fecha Ingreso</label>
+                        <input type="date" name="Desde" class="form-control" />
+                        <span for="Desde" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Hasta" class="control-label">Fecha Salida</label>
+                        <input type="date" name="Hasta" class="form-control" />
                         <span for="Hasta" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -222,7 +255,7 @@
         </div>
     </div>
 </div>
-<table class="table">
+<table class="table" id="tabla">
     <thead>
         <tr>
             <th>
@@ -249,7 +282,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Estado)
             </th>
-
+            <th>
+                
+            </th>
 
         </tr>
     </thead>
@@ -269,10 +304,10 @@
                     @item.Inmueble.Direccion
                 </td>
                 <td id="@item.Id-FechaDesde">
-                    @item.FechaDesde.Date.ToString("yyyy-MM-dd")
+                    @item.FechaDesde.Date.ToString("dd-MM-yyyy")
                 </td>
                 <td id="@item.Id-FechaHasta">
-                    @item.FechaHasta.Date.ToString("yyyy-MM-dd")
+                    @item.FechaHasta.Date.ToString("dd-MM-yyyy")
                 </td>
                 <td>
                     <input type="hidden" value="@item.IdGarante" id="@item.Id-IdGarante" />
@@ -282,7 +317,7 @@
                     @Html.DisplayFor(modelItem => item.Precio)
                 </td>
                 <td id="@item.Id-Estado">
-
+                    <input type="hidden" id="EstadoV" value="@item.Estado" />
                     <form asp-action="Edit">
                         <input type="hidden" name="Id" value='@item.Id' />
                         <input type="hidden" name="Estado" value='1' />
@@ -324,6 +359,7 @@
             <div class="modal-body">
                 <form asp-action="Edit">
                     <input type="hidden" id="Id" name="Id" value="" />
+                    <input type="hidden" id="EstadoE" name="Estado" value="" />
                     <div class="form-group">
                         <label class="control-label">Inquilino</label>
                         <select class="form-control" name="IdInquilino" id="IdInquilino">
@@ -365,21 +401,13 @@
                         </select>
                         <span for="IdGarante" class="text-danger"></span>
                     </div>
+
                     <div class="form-group">
                         <label for="Precio" class="control-label">Precio</label>
                         <input name="Precio" class="form-control" id="precioEdit" />
                         <span for="Precio" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label">Estado</label>
-                        <select class="form-control" name="Estado" id="Estado">
 
-                            <option value="0">Disponible</option>
-                            <option value="1">Cancelado</option>
-
-                        </select>
-                        <span for="Estado" class="text-danger"></span>
-                    </div>
                     <div class="form-group">
                         <input type="submit" value="Editar" class="btn btn-primary" />
                     </div>
@@ -388,4 +416,7 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_DataTable");}
 
+}

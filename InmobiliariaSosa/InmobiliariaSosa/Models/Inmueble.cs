@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,9 +25,10 @@ namespace InmobiliariaSosa.Models
         [Required]
         [Display(Name = "Dueño")]
         public int IdPropietario { get; set; }
+        [NotMapped]
         public Propietario Duenio { get; set; }
         public decimal Precio { get; set; }
-        public int Estado { get; set; }
+        public byte Estado { get; set; }
 
     }
 }

@@ -219,7 +219,7 @@ namespace InmobiliariaSosa.Controllers
                 var e = uData.ObtenerPorEmail(login.Email);
                 if (e == null || e.Clave != hashed)
                 {
-                   
+
                     TempData["error"] = "El email o la clave no son correctos";
                     return RedirectToAction(nameof(Index), "Home");
                 }
@@ -251,8 +251,9 @@ namespace InmobiliariaSosa.Controllers
             }
             catch (Exception ex)
             {
-                return RedirectToAction(nameof(Index),"Home");
+                return RedirectToAction(nameof(Index), "Home");
             }
+
         }
         [Authorize]
         public IActionResult Perfil(Usuario u, String UrlReturn)

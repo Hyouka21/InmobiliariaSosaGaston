@@ -9,6 +9,7 @@ namespace InmobiliariaSosa.Models
 	public class Inquilino
 	{
 		[Display(Name = "Código")]
+		[Key]
 		public int idInquilino { get; set; }
 		[Required]
 		[Display(Name = "Nombre")]

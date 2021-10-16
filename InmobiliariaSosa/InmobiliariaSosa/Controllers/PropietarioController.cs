@@ -1,5 +1,6 @@
 ﻿using InmobiliariaSosa.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -13,9 +14,11 @@ namespace InmobiliariaSosa.Controllers
     [Authorize]
     public class PropietarioController : Controller
     {
+        private readonly IConfiguration configuration;
         private IPropietarioData pd;
         public PropietarioController(IConfiguration configuration,IPropietarioData pr)
         {
+            this.configuration = configuration;
             pd = pr;
         }
         // GET: PropietarioController
@@ -42,6 +45,13 @@ namespace InmobiliariaSosa.Controllers
         {
             try
             {
+                string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+                        password: p.clave,
+                        salt: System.Text.Encoding.ASCII.GetBytes(configuration["Salt"]),
+                        prf: KeyDerivationPrf.HMACSHA1,
+                        iterationCount: 1000,
+                        numBytesRequested: 256 / 8));
+                p.clave = hashed;
                 pd.alta(p);
                 return RedirectToAction(nameof(Index));
             }

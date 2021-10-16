@@ -9,6 +9,7 @@ namespace InmobiliariaSosa.Models
     public class Propietario
     {
 		[Display(Name = "Código")]
+		[Key]
 		public int idPropietario { get; set; }
 		[Required]
 		[Display(Name = "Nombre")]
@@ -25,9 +26,9 @@ namespace InmobiliariaSosa.Models
 		[Required]
 		[Display(Name = "Email")]
 		public string email { get; set; }
-		[Required]
-
+		
 		public string clave { get; set; }
+		public int avatar { get; set; }
 
 	}
 }

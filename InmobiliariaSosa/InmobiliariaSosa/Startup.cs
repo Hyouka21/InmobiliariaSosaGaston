@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -41,6 +42,10 @@ namespace InmobiliariaSosa
                 options.AddPolicy("Empleado", policy => policy.RequireClaim(ClaimTypes.Role, "Administrador", "Empleado"));
                 options.AddPolicy("Administrador", policy => policy.RequireRole("Administrador", "SuperAdministrador"));
                 });
+            services.AddDbContext<ApplicationDbContext>(options => { 
+                options.UseSqlServer(Configuration.GetConnectionString("defaultConnection"));
+               
+            }) ;
             //injeccion de dependencia
             services.AddTransient<IPropietarioData, PropietarioData>();
             services.AddTransient<IInquilinoData, InquilinoData>();

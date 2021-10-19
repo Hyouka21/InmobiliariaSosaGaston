@@ -1,4 +1,5 @@
 ﻿using InmobiliariaSosa.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace InmobiliariaSosa.Api
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class ContratoController: ControllerBase

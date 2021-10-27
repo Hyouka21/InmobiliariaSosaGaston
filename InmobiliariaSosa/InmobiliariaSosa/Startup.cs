@@ -38,9 +38,7 @@ namespace InmobiliariaSosa
                     options.LoginPath = "/Home/Index";
                     options.LogoutPath = "/Usuarios/Logout";
                     options.AccessDeniedPath = "/Home/Restringido";
-                });
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
+                }).AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters()
                     {
@@ -55,6 +53,8 @@ namespace InmobiliariaSosa
                         )
                     };
                 });
+           
+              
             services.AddAuthorization(options =>
                 {
                 options.AddPolicy("Empleado", policy => policy.RequireClaim(ClaimTypes.Role, "Administrador", "Empleado"));
@@ -74,6 +74,8 @@ namespace InmobiliariaSosa
             services.AddTransient<IInmuebleData, InmuebleData>();
             services.AddMvc();
             services.AddSignalR();//añade signalR
+            services.AddHttpContextAccessor();
+      
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

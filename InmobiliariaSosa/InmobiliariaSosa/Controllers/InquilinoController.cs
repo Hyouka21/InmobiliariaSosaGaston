@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace InmobiliariaSosa.Controllers
 {
+
     [Authorize]
     public class InquilinoController : Controller
     {

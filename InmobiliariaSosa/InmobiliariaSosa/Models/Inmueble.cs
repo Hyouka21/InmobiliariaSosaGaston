@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -29,6 +30,8 @@ namespace InmobiliariaSosa.Models
         public Propietario Duenio { get; set; }
         public decimal Precio { get; set; }
         public byte Estado { get; set; }
-
+        public string Imagen { get; set; }
+        [NotMapped]
+        public string ImagenGuardar { get; set; }
     }
 }

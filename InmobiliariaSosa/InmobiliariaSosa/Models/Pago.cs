@@ -19,7 +19,7 @@ namespace InmobiliariaSosa.Models
         public decimal Monto { get; set; }
         [Display(Name = "Contrato")]
         public int ContratoId { get; set; }
-        [NotMapped]
+        
         public Contrato Contrato { get; set; }
         [Display(Name = "Ultima actualizacion")]
         public DateTime? FechaUpdate { get; set; }

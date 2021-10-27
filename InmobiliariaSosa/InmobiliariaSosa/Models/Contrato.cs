@@ -30,9 +30,9 @@ namespace InmobiliariaSosa.Models
 		public int IdGarante { get; set; }
 		
 		public DateTime? FechaCancelado { get; set; }
-		[NotMapped]
+		[ForeignKey(nameof(IdInquilino))]
 		public Inquilino Inquilino { get; set; }
-		[NotMapped]
+		[ForeignKey(nameof(IdInmueble))]
 		public Inmueble Inmueble { get; set; }
 		[NotMapped]
 		public Garante Garante { get; set; }

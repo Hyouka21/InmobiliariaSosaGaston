@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace InmobiliariaSosa.Controllers
 {
+
     [Authorize]
     public class PropietarioController : Controller
     {

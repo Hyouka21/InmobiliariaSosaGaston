@@ -1,4 +1,5 @@
 ﻿using InmobiliariaSosa.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace InmobiliariaSosa.Api
 {
-    [Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     [Route("api/[controller]")]
     public class PagoController : ControllerBase
@@ -29,7 +30,7 @@ namespace InmobiliariaSosa.Api
 
             try
             {
-                var pagos = await applicationDbContext.Pago.Where(x =>
+                var pagos = await applicationDbContext.Pago.Include(x=>x.Contrato).Where(x =>
                    x.ContratoId == id 
                     ).ToListAsync();
 

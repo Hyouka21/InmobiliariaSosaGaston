@@ -1,4 +1,5 @@
 ﻿using InmobiliariaSosa.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace InmobiliariaSosa.Api
 {
-    [Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     [Route("api/[controller]")]
     public class ContratoController: ControllerBase
@@ -24,19 +25,22 @@ namespace InmobiliariaSosa.Api
             this.configuration = configuration;
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<List<Contrato>>> GetContratoXInmueble(int id)
+        public async Task<ActionResult<Contrato>> GetContratoXInmueble(int id)
         {
             
             try
             {
-               
-
-                var contratos = await applicationDbContext.Contrato.Where(x =>
+                if (ModelState.IsValid)
+                {
+                    return  await applicationDbContext.Contrato.Include(x=> x.Inquilino).Include(x=>x.Inmueble).Where(x =>
                    x.IdInmueble == id &&
-                   x.FechaHasta > DateTime.Now && x.FechaDesde< DateTime.Now
-                    ).ToListAsync();
-
-                return Ok(contratos);
+                   x.FechaHasta > DateTime.Now && x.FechaDesde < DateTime.Now)
+                    .FirstOrDefaultAsync();
+                }
+                else
+                {
+                    return BadRequest();
+                }
 
             }
             catch (Exception ex)

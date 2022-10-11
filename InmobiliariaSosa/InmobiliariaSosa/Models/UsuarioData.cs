@@ -22,7 +22,7 @@ namespace InmobiliariaSosa.Models
             int res = -1;
             using (SqlConnection connection = new SqlConnection(conectionString))
             {
-                string sql = $"INSERT INTO Usuario (nombre, apellido, avatar, email, clave, rol) " +
+                string sql = $"INSERT INTO Usuarios (nombre, apellido, avatar, email, clave, rol) " +
                     $"VALUES (@nombre, @apellido, @avatar, @email, @clave, @rol);" +
                     "SELECT SCOPE_IDENTITY();";//devuelve el id insertado (LAST_INSERT_ID para mysql)
                 using (SqlCommand command = new SqlCommand(sql, connection))
@@ -50,7 +50,7 @@ namespace InmobiliariaSosa.Models
             int res = -1;
             using (SqlConnection connection = new SqlConnection(conectionString))
             {
-                string sql = $"DELETE FROM Usuario WHERE id = @id";
+                string sql = $"DELETE FROM Usuarios WHERE id = @id";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.CommandType = CommandType.Text;
@@ -67,7 +67,7 @@ namespace InmobiliariaSosa.Models
             int res = -1;
             using (SqlConnection connection = new SqlConnection(conectionString))
             {
-                string sql = $"UPDATE Usuario SET nombre=@nombre, apellido=@apellido, avatar=@avatar, email=@email, clave=@clave, rol=@rol " +
+                string sql = $"UPDATE Usuarios SET nombre=@nombre, apellido=@apellido, avatar=@avatar, email=@email, clave=@clave, rol=@rol " +
                     $"WHERE id = @id";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -93,7 +93,7 @@ namespace InmobiliariaSosa.Models
             using (SqlConnection connection = new SqlConnection(conectionString))
             {
                 string sql = $"SELECT id, nombre, apellido, avatar, email, clave, rol" +
-                    $" FROM Usuario";
+                    $" FROM Usuarios";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
                     command.CommandType = CommandType.Text;
@@ -124,7 +124,7 @@ namespace InmobiliariaSosa.Models
             Usuario e = null;
             using (SqlConnection connection = new SqlConnection(conectionString))
             {
-                string sql = $"SELECT id, nombre, apellido, avatar, email, clave, rol FROM Usuario" +
+                string sql = $"SELECT id, nombre, apellido, avatar, email, clave, rol FROM Usuarios" +
                     $" WHERE id=@id";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {
@@ -156,7 +156,7 @@ namespace InmobiliariaSosa.Models
             Usuario e = null;
             using (SqlConnection connection = new SqlConnection(conectionString))
             {
-                string sql = $"SELECT id, nombre, apellido, avatar, email, clave, rol FROM Usuario" +
+                string sql = $"SELECT id, nombre, apellido, avatar, email, clave, rol FROM Usuarios" +
                     $" WHERE email=@email";
                 using (SqlCommand command = new SqlCommand(sql, connection))
                 {

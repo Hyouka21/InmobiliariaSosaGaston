@@ -19,6 +19,7 @@ namespace InmobiliariaSosa
 		public DbSet<Inmueble> Inmueble{ get; set; }
 		public DbSet<Propietario> Propietario { get; set; }
 		public DbSet<Pago> Pago { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
 
-	}
+    }
 }

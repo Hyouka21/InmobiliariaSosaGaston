@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Gonza\\Desktop\\.NET\\Inmobiliaria\\InmobiliariaSosaGaston\\InmobiliariaSosa\\InmobiliariaSosa\\InmobiliariaSosa.csproj": {}
+    "C:\\Users\\gaston.sosa\\Source\\Repos\\InmobiliariaSosaGaston\\InmobiliariaSosa\\InmobiliariaSosa\\InmobiliariaSosa.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Gonza\\Desktop\\.NET\\Inmobiliaria\\InmobiliariaSosaGaston\\InmobiliariaSosa\\InmobiliariaSosa\\InmobiliariaSosa.csproj": {
+    "C:\\Users\\gaston.sosa\\Source\\Repos\\InmobiliariaSosaGaston\\InmobiliariaSosa\\InmobiliariaSosa\\InmobiliariaSosa.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Gonza\\Desktop\\.NET\\Inmobiliaria\\InmobiliariaSosaGaston\\InmobiliariaSosa\\InmobiliariaSosa\\InmobiliariaSosa.csproj",
+        "projectUniqueName": "C:\\Users\\gaston.sosa\\Source\\Repos\\InmobiliariaSosaGaston\\InmobiliariaSosa\\InmobiliariaSosa\\InmobiliariaSosa.csproj",
         "projectName": "InmobiliariaSosa",
-        "projectPath": "C:\\Users\\Gonza\\Desktop\\.NET\\Inmobiliaria\\InmobiliariaSosaGaston\\InmobiliariaSosa\\InmobiliariaSosa\\InmobiliariaSosa.csproj",
-        "packagesPath": "C:\\Users\\Gonza\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Gonza\\Desktop\\.NET\\Inmobiliaria\\InmobiliariaSosaGaston\\InmobiliariaSosa\\InmobiliariaSosa\\obj\\",
+        "projectPath": "C:\\Users\\gaston.sosa\\Source\\Repos\\InmobiliariaSosaGaston\\InmobiliariaSosa\\InmobiliariaSosa\\InmobiliariaSosa.csproj",
+        "packagesPath": "C:\\Users\\gaston.sosa\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\gaston.sosa\\Source\\Repos\\InmobiliariaSosaGaston\\InmobiliariaSosa\\InmobiliariaSosa\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Gonza\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\gaston.sosa\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -52,6 +52,12 @@
               "target": "Package",
               "version": "[5.0.11, )"
             },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.7, )"
+            },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[5.0.2, )"
@@ -67,7 +73,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -79,7 +86,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.400\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
         }
       }
     }

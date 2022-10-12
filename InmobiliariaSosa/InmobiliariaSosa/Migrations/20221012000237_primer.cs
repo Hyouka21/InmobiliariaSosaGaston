@@ -82,6 +82,25 @@ namespace InmobiliariaSosa.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Usuarios",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Apellido = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Clave = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Avatar = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Rol = table.Column<int>(type: "int", nullable: false),
+                    ClaveNueva = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Usuarios", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Contrato",
                 columns: table => new
                 {
@@ -136,6 +155,11 @@ namespace InmobiliariaSosa.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Usuarios",
+                columns: new[] { "Id", "Apellido", "Avatar", "Clave", "ClaveNueva", "Email", "Nombre", "Rol" },
+                values: new object[] { 1, "admin", "/Uploadsvatar_1.jpg", "GAKKw6Co5EiIGNiZC1OfQC6offL+e8CoEs3SX0LIrHA=", null, "admin@mail.com", "admin", 1 });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Contrato_IdInmueble",
                 table: "Contrato",
@@ -162,6 +186,9 @@ namespace InmobiliariaSosa.Migrations
 
             migrationBuilder.DropTable(
                 name: "Propietario");
+
+            migrationBuilder.DropTable(
+                name: "Usuarios");
 
             migrationBuilder.DropTable(
                 name: "Contrato");

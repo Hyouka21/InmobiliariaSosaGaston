@@ -264,6 +264,18 @@ namespace InmobiliariaSosa.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Usuarios");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Apellido = "admin",
+                            Avatar = "/Uploadsvatar_1.jpg",
+                            Clave = "GAKKw6Co5EiIGNiZC1OfQC6offL+e8CoEs3SX0LIrHA=",
+                            Email = "admin@mail.com",
+                            Nombre = "admin",
+                            Rol = 1
+                        });
                 });
 
             modelBuilder.Entity("InmobiliariaSosa.Models.Contrato", b =>

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InmobiliariaSosa.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221011234655_segun")]
-    partial class segun
+    [Migration("20221012000237_primer")]
+    partial class primer
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -266,6 +266,18 @@ namespace InmobiliariaSosa.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Usuarios");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Apellido = "admin",
+                            Avatar = "/Uploadsvatar_1.jpg",
+                            Clave = "GAKKw6Co5EiIGNiZC1OfQC6offL+e8CoEs3SX0LIrHA=",
+                            Email = "admin@mail.com",
+                            Nombre = "admin",
+                            Rol = 1
+                        });
                 });
 
             modelBuilder.Entity("InmobiliariaSosa.Models.Contrato", b =>
